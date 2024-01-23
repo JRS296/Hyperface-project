@@ -1,10 +1,15 @@
-package com.jrs296.ems.entity;
+package com.jrs296.ems.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jrs296.ems.models.entity.Department;
+import com.jrs296.ems.models.entity.Employee;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
+@Data
 @Table(name = "Projects")
 public class Project {
 
@@ -13,12 +18,16 @@ public class Project {
     @Column(name = "ProjectID")
     private long projectID;
 
-    @Column(name = "Name")
+    @Column(name = "Name", unique = true)
     private String projectName;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "DepartmentID")
+    @JsonIgnore
     private Department projectDepartment;
+
+    @Transient
+    private int projectDepartmentID;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeProject", cascade = CascadeType.ALL)
     private List<Employee> projectEmployees;
@@ -26,7 +35,7 @@ public class Project {
     public Project() {
     }
 
-    public Project(long ProjectID, String ProjectName, Department projectDepartment, List<Employee> projectEmployees) {
+    public Project(int ProjectID, String ProjectName, Department projectDepartment, List<Employee> projectEmployees) {
         this.projectID = ProjectID;
         this.projectName = ProjectName;
         this.projectDepartment = projectDepartment;
@@ -41,24 +50,4 @@ public class Project {
         * blog.setOwner(ownerTemp);
         *  */
     }
-
-    public long getProjectID() {
-        return projectID;
-    }
-    public void setProjectID(long ProjectID) {
-        this.projectID = ProjectID;
-    }
-
-    public String getProjectName() {
-        return projectName;
-    }
-    public void setProjectName(String ProjectName) {
-        this.projectName = ProjectName;
-    }
-
-    public Department getProjectDepartment() { return projectDepartment; }
-    public void setProjectDepartment(Department projectDepartment) { this.projectDepartment = projectDepartment; }
-
-    public List<Employee> getProjectEmployees() { return projectEmployees; }
-    public void setProjectEmployees(List<Employee> ProjectEmployees) { this.projectEmployees = ProjectEmployees; }
 }
