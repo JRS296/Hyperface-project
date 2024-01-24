@@ -1,17 +1,14 @@
-package com.jrs296.ems.models.DTOs;
+package com.jrs296.ems.models.DTOs.InputDTOs;
 
 import com.jrs296.ems.models.entity.Department;
 import com.jrs296.ems.models.entity.Project;
-import com.jrs296.ems.repository.DepartmentRepository;
-import com.jrs296.ems.service.DepartmentService;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 
 @Data
-public class ProjectDTO {
+public class ProjectInputDTO {
 
     @NotNull(message = "Project Name is required.")
     private String projectName;
@@ -23,7 +20,6 @@ public class ProjectDTO {
         Project temp = new Project(projectName);
         temp.setProjectEmployees(new ArrayList<>(10));
         temp.setProjectDepartment(department);
-        temp.setProjectDepartmentID(department.getDepartmentID());
         return temp;
     }
 }

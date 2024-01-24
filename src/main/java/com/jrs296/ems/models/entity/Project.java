@@ -1,5 +1,6 @@
 package com.jrs296.ems.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jrs296.ems.models.entity.Department;
 import com.jrs296.ems.models.entity.Employee;
@@ -16,38 +17,28 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ProjectID")
-    private long projectID;
+    private int projectID; //generated
 
     @Column(name = "Name", unique = true)
-    private String projectName;
+    private String projectName; //inputDTO
+
+    @Column(name = "ManagerID", unique = true)
+    private int projectManagerID; //inputDTO - Needs that Employee ID to exist
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "DepartmentID")
-    @JsonIgnore
-    private Department projectDepartment;
-
-    @Transient
-    private int projectDepartmentID;
+    @JsonBackReference
+    private Department projectDepartment; //inputDTO - needs that dept to exist
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeProject", cascade = CascadeType.ALL)
-    private List<Employee> projectEmployees;
+    private List<Employee> projectEmployees; //null - to be assigned
 
-    public Project() {
-    }
-
-    public Project(int ProjectID, String ProjectName, Department projectDepartment, List<Employee> projectEmployees) {
-        this.projectID = ProjectID;
+    public Project(String ProjectName, int projectManagerID) {
         this.projectName = ProjectName;
-        this.projectDepartment = projectDepartment;
-        this.projectEmployees = projectEmployees;
+        this.projectManagerID = projectManagerID;
     }
 
     public Project(String ProjectName) {
         this.projectName = ProjectName;
-        /*
-        Do this in services
-        * Owner ownerTemp = ownerRepository.getById(Integer.valueOf(id));
-        * blog.setOwner(ownerTemp);
-        *  */
     }
 }

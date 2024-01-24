@@ -15,10 +15,6 @@ public class DepartmentService {
     @Autowired
     private DepartmentRepository departmentRepository;
 
-    public String displayData(Department department) {
-        return department.asString();
-    }
-
     public Department saveDepartment(Department department) {
         return departmentRepository.save(department);
     }

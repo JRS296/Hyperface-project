@@ -1,7 +1,8 @@
 package com.jrs296.ems.controller;
 
 import com.jrs296.ems.exceptions.ResourceNotFoundException;
-import com.jrs296.ems.models.DTOs.DepartmentDTO;
+import com.jrs296.ems.models.DTOs.InputDTOs.DepartmentInputDTO;
+import com.jrs296.ems.models.DTOs.OutputDTOs.DepartmentOutputDTO;
 import com.jrs296.ems.models.entity.Department;
 import com.jrs296.ems.service.DepartmentService;
 import jakarta.validation.Valid;
@@ -19,25 +20,20 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    @RequestMapping("/display")
-    public String displayDepartment(@RequestBody Department department) {
-        return departmentService.displayData(department);
-    }
-
     @PostMapping("")
-    public Department saveDepartment(@Valid @RequestBody DepartmentDTO departmentDTO) throws ResourceNotFoundException {
-        Department department = departmentService.saveDepartment(departmentDTO.toDepartment());
-        return new ResponseEntity<>(department, HttpStatus.CREATED).getBody();
+    public DepartmentOutputDTO saveDepartment(@Valid @RequestBody DepartmentInputDTO departmentInputDTO) throws ResourceNotFoundException {
+        Department department = departmentService.saveDepartment(departmentInputDTO.toDepartment());
+        return new ResponseEntity<>(DepartmentOutputDTO.toDepartmentOutputDTO(department), HttpStatus.CREATED).getBody();
     }
 
     @GetMapping("")
-    public List<Department> getAllDepartments() {
-        return departmentService.fetchAllDepartments();
+    public List<DepartmentOutputDTO> getAllDepartments() {
+        return DepartmentOutputDTO.toListProjectOutputDTO(departmentService.fetchAllDepartments());
     }
 
     @GetMapping("/{id}")
-    public Department getDepartmentById(@PathVariable("id") int id) {
-        return departmentService.getDepartmentById(id);
+    public DepartmentOutputDTO getDepartmentById(@PathVariable("id") int id) {
+        return DepartmentOutputDTO.toDepartmentOutputDTO(departmentService.getDepartmentById(id));
     }
 
     @PutMapping("/{id}")

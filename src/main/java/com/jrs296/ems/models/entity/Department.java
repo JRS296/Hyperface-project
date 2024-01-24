@@ -1,6 +1,7 @@
 package com.jrs296.ems.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,37 +16,32 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DepartmentID")
-    private int departmentID;
+    private int departmentID; //generated
 
     @Column(name = "Name", unique = true)
-    private String departmentName;
+    private String departmentName; //inputDTO
 
-//    @Column(name = "Projects")
+    @Column(name = "ManagerID", unique = true)
+    private int departmentManagerID; //inputDTO - Needs that Employee ID to exist
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "projectDepartment", cascade = CascadeType.ALL)
-    private List<Project> departmentProjects;
+    @JsonManagedReference
+    private List<Project> departmentProjects; //null - to be assigned
 
-//    @Column(name = "Employees")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeDepartment", cascade = CascadeType.PERSIST)
-    @JsonIgnore
-    private List<Employee> departmentEmployees;
-
-    public Department() {
-    }
+//    @JsonIgnore
+    private List<Employee> departmentEmployeesUnAssignedToProjects; //null - to be assigned
 
     public Department(String departmentName) {
         this.departmentName = departmentName;
         departmentProjects = new ArrayList<Project>();
-        departmentEmployees = new ArrayList<Employee>();
+        departmentEmployeesUnAssignedToProjects = new ArrayList<Employee>();
     }
 
-//    public Department(int departmentID, String departmentName, List<Project> departmentProjects, List<Employee> departmentEmployees) {
-//        this.departmentID = departmentID;
-//        this.departmentName = departmentName;
-//        this.departmentProjects = departmentProjects;
-//        this.departmentEmployees = departmentEmployees;
-//    }
-
-    public String asString() {
-        return "String??";
+    public Department(String departmentName, int departmentManagerID) {
+        this.departmentManagerID = departmentManagerID;
+        this.departmentName = departmentName;
+        departmentProjects = new ArrayList<Project>();
+        departmentEmployeesUnAssignedToProjects = new ArrayList<Employee>();
     }
 }
