@@ -21,20 +21,20 @@ public class EmployeeOutputDTO {
 
     private int employeeDepartmentID;
 
-    private boolean isManager;
+    private String role;
 
-    public EmployeeOutputDTO(int employeeId, String employeeName, String userName, float employeeSalary, int employeeProjectID, int employeeDepartmentID, boolean isManager) {
+    public EmployeeOutputDTO(int employeeId, String employeeName, String userName, float employeeSalary, int employeeProjectID, int employeeDepartmentID, String role) {
         this.employeeId = employeeId;
         this.employeeName = employeeName;
         this.userName = userName;
         this.employeeSalary = employeeSalary;
         this.employeeProjectID = employeeProjectID;
         this.employeeDepartmentID = employeeDepartmentID;
-        this.isManager = isManager;
+        this.role = role;
     }
 
     public static EmployeeOutputDTO toEmployeeOutputDTO(Employee employee) {
-        return new EmployeeOutputDTO(employee.getEmployeeId(), employee.getEmployeeName(), employee.getUserName(), employee.getEmployeeSalary(), employee.getEmployeeProject().getProjectID(), employee.getEmployeeDepartment().getDepartmentID(), employee.isManager());
+        return new EmployeeOutputDTO(employee.getEmployeeId(), employee.getEmployeeName(), employee.getUserName(), employee.getEmployeeSalary(), employee.getEmployeeProject().getProjectID(), employee.getEmployeeDepartment().getDepartmentID(), employee.getRole());
     }
 
     public static List<EmployeeOutputDTO> toListEmployeesOutputDTO(List<Employee> employees) {

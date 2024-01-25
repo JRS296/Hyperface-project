@@ -11,12 +11,13 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/project")
+@RequestMapping("api/service/project")
 public class ProjectController {
     
     @Autowired
@@ -26,6 +27,7 @@ public class ProjectController {
     private DepartmentService departmentService;
 
     @PostMapping("")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DEPT_MANAGER')")
     public ProjectOutputDTO saveProject(@Valid @RequestBody ProjectInputDTO projectInputDTO) throws ResourceNotFoundException {
         Department projectDepartment;
         try {
@@ -42,21 +44,25 @@ public class ProjectController {
     }
 
     @GetMapping("")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')") //This can be removed - this only authorizes, will still enable route to go through as long as its authenticated
     public List<ProjectOutputDTO> getAllProjects() {
         return ProjectOutputDTO.toListProjectOutputDTO(projectService.fetchAllProjects());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')")
     public ProjectOutputDTO getProjectById(@PathVariable("id") int id) {
         return ProjectOutputDTO.toProjectOutputDTO(projectService.getProjectById(id));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')")
     public Project updateProject(@PathVariable("id") int id, @RequestBody Project Project) {
         return projectService.updateEmployeeById(id, Project);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')")
     public String deleteProject(@PathVariable("id") int id) {
         return projectService.deleteProjectById(id);
     }

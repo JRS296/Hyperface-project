@@ -14,13 +14,16 @@ public class Employee {
     private int employeeId; //generated
 
     @Column(name = "Name", unique = true)
-    private String employeeName; //inputDTO
+    private String employeeName; // signUpInputDTO
 
     @Column(name = "UserName", unique = true)
-    private String userName;//inputDTO
+    private String userName;// loginInputDTO signUpInputDTO
+
+    @Column(name = "Email", unique = true)
+    private String employeeEmail;// signUpInputDTO
 
     @Column(name = "Password")
-    private String employeePassword; //inputDTO
+    private String employeePassword; // loginInputDTO signUpInputDTO
 
     @Column(name = "Salary")
     private float employeeSalary = 0; //null - to be assigned
@@ -33,19 +36,22 @@ public class Employee {
     @JoinColumn(name = "DepartmentID")
     private Department employeeDepartment = null; //null - to be assigned
 
-    @Column(name = "IsManager")
-    private boolean isManager = false; //null - to be assigned
+    @Column(name = "Role")
+    private String role = "USER"; //null - to be assigned
 
-    public Employee(String employeeName, String userName, String employeePassword) {
+//    public Employee(String employeeName, String userName, String employeePassword) {
+//        this.employeeName = employeeName;
+//        this.userName = userName;
+//        this.employeePassword = employeePassword;
+//    }
+
+    public Employee(String employeeName, String userName, String employeeEmail, String employeePassword) {
         this.employeeName = employeeName;
         this.userName = userName;
         this.employeePassword = employeePassword;
+        this.employeeEmail = employeeEmail;
     }
 
-    public Employee(String employeeName, String userName, String employeePassword, Project employeeProject) {
-        this.employeeName = employeeName;
-        this.userName = userName;
-        this.employeePassword = employeePassword;
-        this.employeeProject = employeeProject;
+    public Employee () {
     }
 }
