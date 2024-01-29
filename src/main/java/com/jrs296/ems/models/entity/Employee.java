@@ -17,7 +17,7 @@ public class Employee {
     private String employeeName; // signUpInputDTO
 
     @Column(name = "UserName", unique = true)
-    private String userName;// loginInputDTO signUpInputDTO
+    private String username;// loginInputDTO signUpInputDTO
 
     @Column(name = "Email", unique = true)
     private String employeeEmail;// signUpInputDTO
@@ -39,15 +39,9 @@ public class Employee {
     @Column(name = "Role")
     private String role = "USER"; //null - to be assigned
 
-//    public Employee(String employeeName, String userName, String employeePassword) {
-//        this.employeeName = employeeName;
-//        this.userName = userName;
-//        this.employeePassword = employeePassword;
-//    }
-
-    public Employee(String employeeName, String userName, String employeeEmail, String employeePassword) {
+    public Employee(String employeeName, String username, String employeeEmail, String employeePassword) {
         this.employeeName = employeeName;
-        this.userName = userName;
+        this.username = username;
         this.employeePassword = employeePassword;
         this.employeeEmail = employeeEmail;
     }

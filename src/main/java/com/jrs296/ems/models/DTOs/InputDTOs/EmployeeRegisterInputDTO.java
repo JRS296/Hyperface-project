@@ -22,7 +22,7 @@ public class EmployeeRegisterInputDTO {
     @NotBlank(message = "Invalid password: Empty password")
     @NotNull(message = "Invalid password: Password is NULL")
     @Size(min = 8, max = 30, message = "Invalid password: Must be of a minimum of 8 characters")
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=]{8,}$", message = "Invalid password, must have a minimum of 8 characters, at least 1 Uppercase, at least 1 number and at least 1 special character")
+//    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=]{8,}$", message = "Invalid password, must have a minimum of 8 characters, at least 1 Uppercase, at least 1 number and at least 1 special character")
     /*
     ^: Asserts the start of the string.
     (?=.*[A-Z]): Positive lookahead assertion for at least one uppercase letter.

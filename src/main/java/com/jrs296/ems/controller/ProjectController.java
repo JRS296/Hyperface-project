@@ -37,9 +37,8 @@ public class ProjectController {
             departmentService.saveDepartment(projectDepartment);
             return new ResponseEntity<>(ProjectOutputDTO.toProjectOutputDTO(project), HttpStatus.CREATED).getBody();
         } catch (Exception e) {
-            System.out.println("Cannot find ID");
+            System.out.println(e);
         }
-
         return null;
     }
 

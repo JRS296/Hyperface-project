@@ -24,8 +24,7 @@ public class EmployeeInfoService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<Employee> userDetail = employeeRepository.findByUserName(username);
-
+        Optional<Employee> userDetail = employeeRepository.findByUsername(username);
         // Converting userDetail to UserDetails
         return userDetail.map(EmployeeInfoDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found " + username));

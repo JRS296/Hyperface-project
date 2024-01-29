@@ -34,7 +34,7 @@ public class EmployeeOutputDTO {
     }
 
     public static EmployeeOutputDTO toEmployeeOutputDTO(Employee employee) {
-        return new EmployeeOutputDTO(employee.getEmployeeId(), employee.getEmployeeName(), employee.getUserName(), employee.getEmployeeSalary(), employee.getEmployeeProject().getProjectID(), employee.getEmployeeDepartment().getDepartmentID(), employee.getRole());
+        return new EmployeeOutputDTO(employee.getEmployeeId(), employee.getEmployeeName(), employee.getUsername(), employee.getEmployeeSalary(), employee.getEmployeeProject().getProjectID(), employee.getEmployeeDepartment().getDepartmentID(), employee.getRole());
     }
 
     public static List<EmployeeOutputDTO> toListEmployeesOutputDTO(List<Employee> employees) {

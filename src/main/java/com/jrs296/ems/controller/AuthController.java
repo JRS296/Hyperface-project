@@ -5,6 +5,7 @@ import com.jrs296.ems.models.DTOs.InputDTOs.EmployeeRegisterInputDTO;
 import com.jrs296.ems.models.entity.Employee;
 import com.jrs296.ems.service.EmployeeInfoService;
 import com.jrs296.ems.service.JwtService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,7 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("api/auth")
 public class AuthController {
 
     @Autowired
@@ -26,13 +27,14 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    // Open for All User Types
     @GetMapping("/test")
     public String welcome() {
         return "Welcome this endpoint is not secure";
     }
 
     @PostMapping("/register")
-    public String addNewUser(@RequestBody EmployeeRegisterInputDTO employeeRegisterInputDTO) {
+    public String addNewUser(@Valid @RequestBody EmployeeRegisterInputDTO employeeRegisterInputDTO) {
         Employee employee = employeeRegisterInputDTO.toEmployee();
         return employeeInfoService.addUser(employee);
     }
@@ -48,7 +50,6 @@ public class AuthController {
     }
 
     @GetMapping("/user/userProfile")
-    @PreAuthorize("hasAnyAuthority('USER','ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')")
     public String userProfile() {
         return "Welcome to User Profile";
     }
@@ -64,5 +65,8 @@ public class AuthController {
     public String managerProfile() {
         return "Welcome to Manager Profile";
     }
+
+
+    // Change Password
 }
 

@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 
 public class EmployeeInfoDetails implements UserDetails {
 
-    private String name;
+    private String username;
     private String password;
     private List<GrantedAuthority> authorities;
 
     public EmployeeInfoDetails(Employee employee) {
-        name = employee.getEmployeeName();
+        username = employee.getUsername();
         password = employee.getEmployeePassword();
         authorities = Arrays.stream(employee.getRole().split(","))
                 .map(SimpleGrantedAuthority::new)
@@ -36,7 +36,7 @@ public class EmployeeInfoDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return username;
     }
 
     @Override
