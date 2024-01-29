@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.ArrayList;
 
 @Data
-public class ProjectInputDTO {
+public class ProjectEditDTO {
 
     @NotNull(message = "Project Name is required.")
     private String projectName;
@@ -16,13 +16,11 @@ public class ProjectInputDTO {
     @NotNull(message = "Department must be specified for a given project.")
     private int projectDepartmentID;
 
-    private int projectManagerID = -1;
-
     public Project toProject(Department department) {
         Project temp = new Project(projectName);
         temp.setProjectEmployees(new ArrayList<>(10));
         temp.setProjectDepartment(department);
-        temp.setProjectManagerID(projectManagerID);
         return temp;
     }
 }
+

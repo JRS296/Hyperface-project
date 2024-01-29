@@ -46,15 +46,16 @@ public class ProjectService {
 //            }
 
             return ProjectRepository.save(originalEmployee);
+        } else {
+            throw new RuntimeException("Project Not Found");
         }
-        return null;
     }
 
     public String deleteProjectById(int id) {
         if (ProjectRepository.findById(id).isPresent()) {
             ProjectRepository.deleteById(id);
-            return "Employee deleted successfully";
+            return "Project deleted successfully";
         }
-        return "No such employee in the database";
+        return "No such Project in the database";
     }
 }

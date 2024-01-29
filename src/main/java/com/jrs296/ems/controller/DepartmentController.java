@@ -21,34 +21,37 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    @PostMapping("")
+    // Auth + General Access
+    @GetMapping("") // DONE
+    public List<DepartmentOutputDTO> getAllDepartments() {
+        return DepartmentOutputDTO.toListProjectOutputDTO(departmentService.fetchAllDepartments());
+    }
+
+    @GetMapping("/{id}") // DONE
+    public DepartmentOutputDTO getDepartmentById(@PathVariable("id") int id) {
+        return DepartmentOutputDTO.toDepartmentOutputDTO(departmentService.getDepartmentById(id));
+    }
+
+    // ADMIN and DEPT_MANAGER ONLY
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public DepartmentOutputDTO updateDepartment(@PathVariable("id") int id, @Valid @RequestBody DepartmentInputDTO departmentInputDTO) {
+        Department department = departmentService.updateEmployeeById(id, departmentInputDTO.toDepartment());
+        return new ResponseEntity<>(DepartmentOutputDTO.toDepartmentOutputDTO(department), HttpStatus.CREATED).getBody();
+    }
+
+    // ADMIN ONLY
+    @PostMapping("") // DONE
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public DepartmentOutputDTO saveDepartment(@Valid @RequestBody DepartmentInputDTO departmentInputDTO) throws ResourceNotFoundException {
         Department department = departmentService.saveDepartment(departmentInputDTO.toDepartment());
         return new ResponseEntity<>(DepartmentOutputDTO.toDepartmentOutputDTO(department), HttpStatus.CREATED).getBody();
     }
 
-    @GetMapping("")
-    @PreAuthorize("hasAnyAuthority('USER','ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')")
-    public List<DepartmentOutputDTO> getAllDepartments() {
-        return DepartmentOutputDTO.toListProjectOutputDTO(departmentService.fetchAllDepartments());
-    }
-
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('USER','ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')")
-    public DepartmentOutputDTO getDepartmentById(@PathVariable("id") int id) {
-        return DepartmentOutputDTO.toDepartmentOutputDTO(departmentService.getDepartmentById(id));
-    }
-
-    @PutMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'DEPT_MANAGER')")
-    public Department updateDepartment(@PathVariable("id") int id, @RequestBody Department department) {
-        return departmentService.updateEmployeeById(id, department);
-    }
-
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'DEPT_MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')") //Add functionality such that Dept Manager can do this as well
     public String deleteDepartment(@PathVariable("id") int id) {
+        // Delete ID, Delete all Projects under ID, Assign all Employees under Dept a null project and null Department
         return departmentService.deleteDepartmentById(id);
     }
 }

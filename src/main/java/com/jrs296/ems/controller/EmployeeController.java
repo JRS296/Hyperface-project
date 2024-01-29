@@ -3,6 +3,7 @@ package com.jrs296.ems.controller;
 import com.jrs296.ems.exceptions.ResourceNotFoundException;
 import com.jrs296.ems.models.DTOs.InputDTOs.EmployeeLoginInputDTO;
 import com.jrs296.ems.models.DTOs.InputDTOs.EmployeeRegisterInputDTO;
+import com.jrs296.ems.models.DTOs.OutputDTOs.EmployeeOutputDTO;
 import com.jrs296.ems.models.entity.Employee;
 import com.jrs296.ems.service.DepartmentService;
 import com.jrs296.ems.service.EmployeeService;
@@ -13,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/service/employee")
@@ -26,49 +29,34 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-//    @PostMapping("")
-//    @PreAuthorize("hasAnyAuthority('ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')")
-//    public Employee registerEmployee(@Valid @RequestBody EmployeeRegisterInputDTO employeeRegisterInputDTO) {
-//        Department projectDepartment;
-//        try {
-//            projectDepartment = departmentService.getDepartmentById(projectInputDTO.getProjectDepartmentID());
-//            Project project = projectService.saveProject(projectInputDTO.toProject(projectDepartment));
-//            projectDepartment.getDepartmentProjects().add(project);
-//            departmentService.saveDepartment(projectDepartment);
-//            return new ResponseEntity<>(ProjectOutputDTO.toProjectOutputDTO(project), HttpStatus.CREATED).getBody();
-//        } catch (Exception e) {
-//            System.out.println("Cannot find ID");
-//        }
-//
-//        Employee employee = employeeRegisterInputDTO.toEmployee();
-//
-//        employeeService.saveEmployee(employee);
-//        return new ResponseEntity<>(EmployeeOutputDTO.toEmployeeOutputDTO(employee), HttpStatus.CREATED).getBody();
-//        return new ResponseEntity<>(employee, HttpStatus.CREATED).getBody();
-//
-//    }
-//
-//    @GetMapping("")
-//    @PreAuthorize("hasAnyAuthority('USER','ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')")
-//    public List<ProjectOutputDTO> getAllProjects() {
-//        return ProjectOutputDTO.toListProjectOutputDTO(projectService.fetchAllProjects());
-//    }
-//
-//    @GetMapping("/{id}")
-//    @PreAuthorize("hasAnyAuthority('USER','ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')")
-//    public ProjectOutputDTO getProjectById(@PathVariable("id") int id) {
-//        return ProjectOutputDTO.toProjectOutputDTO(projectService.getProjectById(id));
-//    }
-//
+    // GENERAL ACCESS
+    @GetMapping("") //DONE
+    public List<EmployeeOutputDTO> getAllEmployees() {
+        return EmployeeOutputDTO.toListEmployeesOutputDTO(employeeService.fetchAllEmployees());
+    }
+
+    @GetMapping("/{id}") //DONE
+    public EmployeeOutputDTO getProjectById(@PathVariable("id") int id) {
+        return EmployeeOutputDTO.toEmployeeOutputDTO(employeeService.getEmployeeByID(id));
+    }
+
+    // Get Employees that are unassigned to any projects
+
+    // Get All Employees that are completely unassigned
+
+
+
+    // EMPLOYEE SPECIFIC CHANGES - can edit password, username and name; NOT Dept ID and Project ID
 //    @PutMapping("/{id}")
-//    @PreAuthorize("hasAnyAuthority('USER','ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')")
-//    public Project updateProject(@PathVariable("id") int id, @RequestBody Project Project) {
+//    @PreAuthorize("hasAnyAuthority('USER')")
+//    public Employee updateProject(@PathVariable("id") int id, @RequestBody Employee Project) {
 //        return projectService.updateEmployeeById(id, Project);
 //    }
-//
-//    @DeleteMapping("/{id}")
-//    @PreAuthorize("hasAnyAuthority('ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')")
-//    public String deleteProject(@PathVariable("id") int id) {
-//        return projectService.deleteProjectById(id);
-//    }
+
+    // EMPLOYEE SPECIFIC CHANGES - Only Managers (of that Project/Dept) and Admins can remove Employees
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')")
+    public String deleteProject(@PathVariable("id") int id) {
+        return projectService.deleteProjectById(id);
+    }
 }

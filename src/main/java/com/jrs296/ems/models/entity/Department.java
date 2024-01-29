@@ -21,17 +21,18 @@ public class Department {
     @Column(name = "Name", unique = true)
     private String departmentName; //inputDTO
 
-    @Column(name = "ManagerID", unique = true)
-    private int departmentManagerID; //inputDTO - Needs that Employee ID to exist
+    @Column(name = "ManagerID")
+    private int departmentManagerID = -1; //inputDTO - Needs that Employee ID to exist
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "projectDepartment", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Project> departmentProjects; //null - to be assigned
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeDepartment", cascade = CascadeType.PERSIST)
-//    @JsonIgnore
+    @JsonIgnore
     private List<Employee> departmentEmployeesUnAssignedToProjects; //null - to be assigned
 
+    public Department () {};
     public Department(String departmentName) {
         this.departmentName = departmentName;
         departmentProjects = new ArrayList<Project>();

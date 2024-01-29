@@ -34,7 +34,11 @@ public class EmployeeOutputDTO {
     }
 
     public static EmployeeOutputDTO toEmployeeOutputDTO(Employee employee) {
-        return new EmployeeOutputDTO(employee.getEmployeeId(), employee.getEmployeeName(), employee.getUsername(), employee.getEmployeeSalary(), employee.getEmployeeProject().getProjectID(), employee.getEmployeeDepartment().getDepartmentID(), employee.getRole());
+        int employeeProjectID = -1;
+        int employeeDepartmentID = -1;
+        if(employee.getEmployeeProject() != null) employeeProjectID = employee.getEmployeeProject().getProjectID();
+        if(employee.getEmployeeDepartment() != null) employeeDepartmentID = employee.getEmployeeDepartment().getDepartmentID();
+        return new EmployeeOutputDTO(employee.getEmployeeId(), employee.getEmployeeName(), employee.getUsername(), employee.getEmployeeSalary(), employeeProjectID, employeeDepartmentID, employee.getRole());
     }
 
     public static List<EmployeeOutputDTO> toListEmployeesOutputDTO(List<Employee> employees) {

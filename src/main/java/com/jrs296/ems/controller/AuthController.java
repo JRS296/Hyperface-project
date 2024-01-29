@@ -33,13 +33,13 @@ public class AuthController {
         return "Welcome this endpoint is not secure";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/register") //DONE
     public String addNewUser(@Valid @RequestBody EmployeeRegisterInputDTO employeeRegisterInputDTO) {
         Employee employee = employeeRegisterInputDTO.toEmployee();
         return employeeInfoService.addUser(employee);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/login") //DONE
     public String authenticateAndGetToken(@RequestBody EmployeeLoginInputDTO employeeLoginInputDTO) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(employeeLoginInputDTO.getUsername(), employeeLoginInputDTO.getPassword()));
         if (authentication.isAuthenticated()) {
@@ -65,8 +65,5 @@ public class AuthController {
     public String managerProfile() {
         return "Welcome to Manager Profile";
     }
-
-
-    // Change Password
 }
 

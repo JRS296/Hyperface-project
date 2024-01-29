@@ -28,41 +28,37 @@ public class ProjectController {
 
     @PostMapping("")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'DEPT_MANAGER')")
-    public ProjectOutputDTO saveProject(@Valid @RequestBody ProjectInputDTO projectInputDTO) throws ResourceNotFoundException {
-        Department projectDepartment;
-        try {
-            projectDepartment = departmentService.getDepartmentById(projectInputDTO.getProjectDepartmentID());
-            Project project = projectService.saveProject(projectInputDTO.toProject(projectDepartment));
-            projectDepartment.getDepartmentProjects().add(project);
-            departmentService.saveDepartment(projectDepartment);
-            return new ResponseEntity<>(ProjectOutputDTO.toProjectOutputDTO(project), HttpStatus.CREATED).getBody();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
+    public ProjectOutputDTO createNewProject(@Valid @RequestBody ProjectInputDTO projectInputDTO) {
+        Department projectDepartment = departmentService.getDepartmentById(projectInputDTO.getProjectDepartmentID());
+        Project project = projectService.saveProject(projectInputDTO.toProject(projectDepartment));
+        projectDepartment.getDepartmentProjects().add(project);
+        departmentService.saveDepartment(projectDepartment);
+        return new ResponseEntity<>(ProjectOutputDTO.toProjectOutputDTO(project), HttpStatus.CREATED).getBody();
     }
 
+    // General Access
     @GetMapping("")
-    @PreAuthorize("hasAnyAuthority('USER','ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')") //This can be removed - this only authorizes, will still enable route to go through as long as its authenticated
     public List<ProjectOutputDTO> getAllProjects() {
         return ProjectOutputDTO.toListProjectOutputDTO(projectService.fetchAllProjects());
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('USER','ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')")
     public ProjectOutputDTO getProjectById(@PathVariable("id") int id) {
         return ProjectOutputDTO.toProjectOutputDTO(projectService.getProjectById(id));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')")
-    public Project updateProject(@PathVariable("id") int id, @RequestBody Project Project) {
-        return projectService.updateEmployeeById(id, Project);
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DEPT_MANAGER')")
+    public Project updateProject(@PathVariable("id") int id, @Valid @RequestBody ProjectInputDTO projectInputDTO) {
+        Department department = departmentService.getDepartmentById(projectInputDTO.getProjectDepartmentID());
+
+        return projectService.updateEmployeeById(id, projectInputDTO.toProject(department));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DEPT_MANAGER')")
     public String deleteProject(@PathVariable("id") int id) {
+        // Place all Employees in Unassigned List, each employee's Project to null
         return projectService.deleteProjectById(id);
     }
 }

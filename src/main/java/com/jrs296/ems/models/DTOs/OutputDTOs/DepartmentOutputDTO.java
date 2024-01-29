@@ -18,9 +18,9 @@ public class DepartmentOutputDTO {
 
     private List<ProjectOutputDTO> departmentProjects;
 
-    private List<Employee> departmentEmployeesUnAssignedToProjects; //Replace with EmployeeDTO
+    private List<EmployeeOutputDTO> departmentEmployeesUnAssignedToProjects; //Replace with EmployeeDTO
 
-    public DepartmentOutputDTO(int departmentID, String departmentName, List<ProjectOutputDTO> departmentProjects, List<Employee> departmentEmployeesUnAssignedToProjects) {
+    public DepartmentOutputDTO(int departmentID, String departmentName, List<ProjectOutputDTO> departmentProjects, List<EmployeeOutputDTO> departmentEmployeesUnAssignedToProjects) {
         this.departmentID = departmentID;
         this.departmentName = departmentName;
         this.departmentProjects = departmentProjects;
@@ -28,7 +28,7 @@ public class DepartmentOutputDTO {
     }
 
     public static DepartmentOutputDTO toDepartmentOutputDTO(Department department) {
-        return new DepartmentOutputDTO(department.getDepartmentID(), department.getDepartmentName(), ProjectOutputDTO.toListProjectOutputDTO(department.getDepartmentProjects()), department.getDepartmentEmployeesUnAssignedToProjects());
+        return new DepartmentOutputDTO(department.getDepartmentID(), department.getDepartmentName(), ProjectOutputDTO.toListProjectOutputDTO(department.getDepartmentProjects()), EmployeeOutputDTO.toListEmployeesOutputDTO(department.getDepartmentEmployeesUnAssignedToProjects()));
     }
 
     public static List<DepartmentOutputDTO> toListProjectOutputDTO(List<Department> departments) {
