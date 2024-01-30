@@ -2,17 +2,41 @@ Briefing on Controller Flow:
 
 http://localhost:8080   -   root
 
-/test - TestController
+/test - [✅] - TestController
 
 /api/auth - AuthController
-- /test - test Controller
-- /register - all employees are to register, role defaults to USER, Admin is pre-created, ProjectID and DepartmentID == null
-- /login - username and password
+- (GET) /test                   - [✅] - test Controller, verifies pre-authorize for all roles.
+- (GET) /user/userProfile       - [✅] - test Controller, verifies pre-authorize for all roles.
+- (GET) /admin/adminProfile     - [✅] - test Controller, verifies pre-authorize for all roles.
+- (GET) /manager/managerProfile - [✅] - test Controller, verifies pre-authorize for all roles.
+- (POST) /register              - [✅] - all employees are to register, role defaults to USER, Admin is pre-created, ProjectID and DepartmentID == null
+- (POST) /login                 - [✅] - username and password
 
-/api/assign
-- (PUT) /manager - Assigns Role change to either department or project - ONLY if Department (or) Project exists
-- (PUT) /employee - Assigns Project and Department to an employee
+/api/assign - AdminController
+- (GET) /authority - [✅] - Test Endpoint, returns authorities of currently logged in user
+- (PUT) /manager   - [ ] - Assigns Role change to either department or project - ONLY if Department (or) Project exists
+- (PUT) /employee  - [ ] -  Assigns Project and Department to an employee
+TBC - Need to fix unassigned array, also bugs with relation to un-assignment
 
+/api/service/department - DepartmentController
+- (GET) /        - [✅] - ALL - Get all departments
+- (GET) /{id}    - [✅] - ALL - Get department by id
+- (POST) /       - [✅] - ADMIN - Create a department
+- (PUT) /        - [✅] - ADMIN - Update department (only name of department)
+- (DELETE) /{id} - [✅] - ADMIN - Delete department by id
 
-/api/service/department
-- (GET) /
+/api/service/project - ProjectController
+- (GET) /        - [ ] - ALL - Get all projects
+- (GET) /{id}    - [ ] - ALL - Get project by id
+- (POST) /       - [ ] - ADMIN, DEPT_MANAGER - Create a project*
+- (PUT) /        - [ ] - ADMIN, DEPT_MANAGER - Update project (only name of project and *assigned department)
+- (DELETE) /{id} - [ ] - ADMIN, DEPT_MANAGER - Delete project by id*
+* - within scope of own department for given project.
+
+/api/service/employee - EmployeeController
+- (GET) /        - [ ] - ALL - Get all employees
+- (GET) /{id}    - [ ] - ALL - Get employee by id
+- (PUT) /        - [ ] - USER - Update employee (name, username, password and email)**
+- (DELETE) /{id} - [ ] - ADMIN, DEPT_MANAGER, PROJECT_MANAGER - Delete employee by id*
+* - within scope of own department and own project.
+** - within scope of own user

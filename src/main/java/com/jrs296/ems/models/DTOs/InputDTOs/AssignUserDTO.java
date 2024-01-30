@@ -9,8 +9,6 @@ public class AssignUserDTO { //Login
     @NotNull(message = "Employee ID is required.")
     private int employeeID;
 
-//    private String assignToRole = "USER";
-
     @NotNull(message = "Department ID is required.")
     private int assignToDepartmentID;
 

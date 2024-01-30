@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,19 +32,28 @@ public class Department {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeDepartment", cascade = CascadeType.PERSIST)
     @JsonIgnore
-    private List<Employee> departmentEmployeesUnAssignedToProjects; //null - to be assigned
+    private List<Employee> allEmployees; //generated
 
-    public Department () {};
+    @Transient
+    private List<Employee> unAssignedToProject; //null - to be assigned
+
+    public Department () {
+        departmentProjects = new ArrayList<Project>();
+        allEmployees = new ArrayList<Employee>();
+        unAssignedToProject = new ArrayList<Employee>();
+    };
     public Department(String departmentName) {
         this.departmentName = departmentName;
         departmentProjects = new ArrayList<Project>();
-        departmentEmployeesUnAssignedToProjects = new ArrayList<Employee>();
+        allEmployees = new ArrayList<Employee>();
+        unAssignedToProject = new ArrayList<Employee>();
     }
 
     public Department(String departmentName, int departmentManagerID) {
         this.departmentManagerID = departmentManagerID;
         this.departmentName = departmentName;
         departmentProjects = new ArrayList<Project>();
-        departmentEmployeesUnAssignedToProjects = new ArrayList<Employee>();
+        allEmployees = new ArrayList<Employee>();
+        unAssignedToProject = new ArrayList<Employee>();
     }
 }

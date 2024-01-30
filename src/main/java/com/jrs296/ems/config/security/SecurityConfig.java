@@ -1,8 +1,9 @@
-package com.jrs296.ems.config;
+package com.jrs296.ems.config.security;
 
+import com.jrs296.ems.config.security.AuthEntry;
+import com.jrs296.ems.config.security.ForbiddenHandler;
 import com.jrs296.ems.filters.JwtAuthFilter;
 import com.jrs296.ems.service.EmployeeInfoService;
-import com.jrs296.ems.exceptions.security.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,10 +29,10 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 public class SecurityConfig {
 
     @Autowired
-    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private AuthEntry authEntry;
 
     @Autowired
-    private CustomAccessDeniedHandler customAccessDeniedHandler;
+    private ForbiddenHandler forbiddenHandler;
 
     @Autowired
     private JwtAuthFilter authFilter;
@@ -46,8 +47,8 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/api/auth/test", "/api/auth/register", "/api/auth/login", "/api/test").permitAll().anyRequest().authenticated())
-                .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(customAuthenticationEntryPoint)
-                        .accessDeniedHandler(customAccessDeniedHandler))
+                .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(authEntry)
+                        .accessDeniedHandler(forbiddenHandler))
                 .authenticationProvider(authenticationProvider())
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)

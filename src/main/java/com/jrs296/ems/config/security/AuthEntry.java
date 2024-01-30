@@ -1,4 +1,4 @@
-package com.jrs296.ems.exceptions.security;
+package com.jrs296.ems.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -14,13 +14,12 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class AuthEntry implements AuthenticationEntryPoint {
     @Autowired
     private ObjectMapper objectMapper;
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response,
-                         AuthenticationException authException) throws IOException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         response.setStatus(401);
         if (authException.getClass().equals(BadCredentialsException.class)) {

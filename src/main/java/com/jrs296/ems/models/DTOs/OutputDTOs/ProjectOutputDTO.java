@@ -12,21 +12,24 @@ public class ProjectOutputDTO {
 
     private int projectID;
 
+    private int projectManagerID;
+
     private String projectName;
 
     private int projectDepartmentID;
 
-    private List<Employee> projectEmployees;
+    private List<EmployeeOutputDTO> projectEmployees;
 
-    public ProjectOutputDTO(int projectID, String projectName, List<Employee> projectEmployees, int projectDepartmentID) {
+    public ProjectOutputDTO(int projectID, int projectManagerID, String projectName, List<EmployeeOutputDTO> projectEmployees, int projectDepartmentID) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.projectEmployees = projectEmployees;
         this.projectDepartmentID = projectDepartmentID;
+        this.projectManagerID = projectManagerID;
     }
 
     public static ProjectOutputDTO toProjectOutputDTO(Project project) {
-        return new ProjectOutputDTO(project.getProjectID(), project.getProjectName(), project.getProjectEmployees(), project.getProjectDepartment().getDepartmentID());
+        return new ProjectOutputDTO(project.getProjectID(), project.getProjectManagerID(), project.getProjectName(), EmployeeOutputDTO.toListEmployeesOutputDTO(project.getProjectEmployees()), project.getProjectDepartment().getDepartmentID());
     }
 
     public static List<ProjectOutputDTO> toListProjectOutputDTO(List<Project> projects) {

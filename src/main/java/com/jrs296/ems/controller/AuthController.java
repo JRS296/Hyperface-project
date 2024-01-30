@@ -49,6 +49,8 @@ public class AuthController {
         }
     }
 
+    // Tests
+
     @GetMapping("/user/userProfile")
     public String userProfile() {
         return "Welcome to User Profile";

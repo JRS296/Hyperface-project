@@ -14,7 +14,8 @@ public class DepartmentInputDTO {
 
     public Department toDepartment() {
         Department temp = new Department(departmentName);
-        temp.setDepartmentEmployeesUnAssignedToProjects(new ArrayList<>(10));
+        temp.setAllEmployees(new ArrayList<>(10));
+        temp.setUnAssignedToProject(new ArrayList<>(10));
         temp.setDepartmentProjects(new ArrayList<>(3));
         return temp;
     }

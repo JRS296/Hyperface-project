@@ -1,6 +1,7 @@
 package com.jrs296.ems.service;
 
 import com.jrs296.ems.models.entity.Department;
+import com.jrs296.ems.models.entity.Employee;
 import com.jrs296.ems.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ import java.util.Objects;
 public class DepartmentService {
     @Autowired
     private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     public Department saveDepartment(Department department) {
         return departmentRepository.save(department);
@@ -51,9 +55,17 @@ public class DepartmentService {
 
     public String deleteDepartmentById(int id) {
         if (departmentRepository.findById(id).isPresent()) {
+            // Decouple all Employees Associated with this Department
+            List<Employee> employees = departmentRepository.findById(id).get().getAllEmployees();
+            for (Employee employee : employees) {
+                employee.setEmployeeProject(null);
+                employee.setEmployeeDepartment(null);
+                employeeService.saveEmployee(employee);
+            }
+
             departmentRepository.deleteById(id);
-            return "Employee deleted successfully";
+            return "Department deleted successfully (Employees Persisted)";
         }
-        return "No such employee in the database";
+        return "No such Department in the database";
     }
 }

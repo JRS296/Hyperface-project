@@ -36,7 +36,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}") //DONE
-    public EmployeeOutputDTO getProjectById(@PathVariable("id") int id) {
+    public EmployeeOutputDTO getEmployeeByID(@PathVariable("id") int id) {
         return EmployeeOutputDTO.toEmployeeOutputDTO(employeeService.getEmployeeByID(id));
     }
 
@@ -46,17 +46,17 @@ public class EmployeeController {
 
 
 
-    // EMPLOYEE SPECIFIC CHANGES - can edit password, username and name; NOT Dept ID and Project ID
-//    @PutMapping("/{id}")
-//    @PreAuthorize("hasAnyAuthority('USER')")
-//    public Employee updateProject(@PathVariable("id") int id, @RequestBody Employee Project) {
-//        return projectService.updateEmployeeById(id, Project);
-//    }
+    // EMPLOYEE SPECIFIC CHANGES - can edit password, username and name; NOT Dept ID and Project ID, Admin cannot interfere with this
+    @PutMapping("/edit") // Done
+    @PreAuthorize("hasAnyAuthority('USER','PROJECT_MANAGER', 'DEPT_MANAGER')")
+    public String updateEmployee(@RequestBody EmployeeRegisterInputDTO employeeRegisterInputDTO) {
+        return employeeService.updateEmployeeById(employeeRegisterInputDTO);
+    }
 
     // EMPLOYEE SPECIFIC CHANGES - Only Managers (of that Project/Dept) and Admins can remove Employees
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'PROJECT_MANAGER', 'DEPT_MANAGER')")
-    public String deleteProject(@PathVariable("id") int id) {
-        return projectService.deleteProjectById(id);
+    public String deleteEmployee(@PathVariable("id") int id) {
+        return employeeService.deleteEmployeeByID(id);
     }
 }

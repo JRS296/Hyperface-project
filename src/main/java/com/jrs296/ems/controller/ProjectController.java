@@ -26,16 +26,6 @@ public class ProjectController {
     @Autowired
     private DepartmentService departmentService;
 
-    @PostMapping("")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'DEPT_MANAGER')")
-    public ProjectOutputDTO createNewProject(@Valid @RequestBody ProjectInputDTO projectInputDTO) {
-        Department projectDepartment = departmentService.getDepartmentById(projectInputDTO.getProjectDepartmentID());
-        Project project = projectService.saveProject(projectInputDTO.toProject(projectDepartment));
-        projectDepartment.getDepartmentProjects().add(project);
-        departmentService.saveDepartment(projectDepartment);
-        return new ResponseEntity<>(ProjectOutputDTO.toProjectOutputDTO(project), HttpStatus.CREATED).getBody();
-    }
-
     // General Access
     @GetMapping("")
     public List<ProjectOutputDTO> getAllProjects() {
@@ -45,6 +35,17 @@ public class ProjectController {
     @GetMapping("/{id}")
     public ProjectOutputDTO getProjectById(@PathVariable("id") int id) {
         return ProjectOutputDTO.toProjectOutputDTO(projectService.getProjectById(id));
+    }
+
+    //Restricted Access
+    @PostMapping("")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DEPT_MANAGER')")
+    public ProjectOutputDTO createNewProject(@Valid @RequestBody ProjectInputDTO projectInputDTO) {
+        Department projectDepartment = departmentService.getDepartmentById(projectInputDTO.getProjectDepartmentID());
+        Project project = projectService.saveProject(projectInputDTO.toProject(projectDepartment));
+        projectDepartment.getDepartmentProjects().add(project);
+        departmentService.saveDepartment(projectDepartment);
+        return new ResponseEntity<>(ProjectOutputDTO.toProjectOutputDTO(project), HttpStatus.CREATED).getBody();
     }
 
     @PutMapping("/{id}")

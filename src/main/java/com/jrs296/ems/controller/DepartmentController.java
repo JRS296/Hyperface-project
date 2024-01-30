@@ -32,15 +32,14 @@ public class DepartmentController {
         return DepartmentOutputDTO.toDepartmentOutputDTO(departmentService.getDepartmentById(id));
     }
 
-    // ADMIN and DEPT_MANAGER ONLY
-    @PutMapping("/{id}")
+    // ADMIN ONLY
+    @PutMapping("/{id}") // DONE
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public DepartmentOutputDTO updateDepartment(@PathVariable("id") int id, @Valid @RequestBody DepartmentInputDTO departmentInputDTO) {
         Department department = departmentService.updateEmployeeById(id, departmentInputDTO.toDepartment());
         return new ResponseEntity<>(DepartmentOutputDTO.toDepartmentOutputDTO(department), HttpStatus.CREATED).getBody();
     }
 
-    // ADMIN ONLY
     @PostMapping("") // DONE
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public DepartmentOutputDTO saveDepartment(@Valid @RequestBody DepartmentInputDTO departmentInputDTO) throws ResourceNotFoundException {
@@ -48,7 +47,7 @@ public class DepartmentController {
         return new ResponseEntity<>(DepartmentOutputDTO.toDepartmentOutputDTO(department), HttpStatus.CREATED).getBody();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}") // DONE
     @PreAuthorize("hasAnyAuthority('ADMIN')") //Add functionality such that Dept Manager can do this as well
     public String deleteDepartment(@PathVariable("id") int id) {
         // Delete ID, Delete all Projects under ID, Assign all Employees under Dept a null project and null Department
