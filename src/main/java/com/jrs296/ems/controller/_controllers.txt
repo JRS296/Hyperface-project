@@ -16,9 +16,9 @@ http://localhost:8080   -   root
 - (GET) /authority - [✅] - Test Endpoint, returns authorities of currently logged-in user
 - (PUT) /manager   - [ ] - Assigns Role change to either department or project - ONLY if Department (or) Project exists
 - (PUT) /employee  - [ ] -  Assigns Project and Department to an employee
-TBC - Need to fix unassigned array, also bugs with relation to un-assignment
+TODO - TestCases for manager and employee, specific to migration between departments (***)
 
-/api/service/department - DepartmentController
+/api/service/department - DepartmentController ✅
 - (GET) /        - [✅] - ALL - Get all departments
 - (GET) /{id}    - [✅] - ALL - Get department by id
 - (POST) /       - [✅] - ADMIN - Create a department
@@ -26,17 +26,18 @@ TBC - Need to fix unassigned array, also bugs with relation to un-assignment
 - (DELETE) /{id} - [✅] - ADMIN - Delete department by id
 
 /api/service/project - ProjectController
-- (GET) /        - [ ] - ALL - Get all projects
-- (GET) /{id}    - [ ] - ALL - Get project by id
+- (GET) /        - [✅] - ALL - Get all projects
+- (GET) /{id}    - [✅] - ALL - Get project by id
 - (POST) /       - [ ] - ADMIN, DEPT_MANAGER - Create a project*
 - (PUT) /        - [ ] - ADMIN, DEPT_MANAGER - Update project (only name of project and *assigned department)
 - (DELETE) /{id} - [ ] - ADMIN, DEPT_MANAGER - Delete project by id*
-* - within scope of own department for given project.
+TODO - Scoped Handling (DEPT_MANAGER)
+TODO - TestCases for PUT and DELETE
 
 /api/service/employee - EmployeeController
-- (GET) /        - [ ] - ALL - Get all employees
-- (GET) /{id}    - [ ] - ALL - Get employee by id
+- (GET) /        - [✅] - ALL - Get all employees
+- (GET) /{id}    - [✅] - ALL - Get employee by id
 - (PUT) /        - [ ] - USER - Update employee (name, username, password and email)**
 - (DELETE) /{id} - [ ] - ADMIN, DEPT_MANAGER, PROJECT_MANAGER - Delete employee by id*
-* - within scope of own department and own project.
-** - within scope of own user
+TODO - User Specific data change (PUT)
+TODO - Scoped Handling (DEPT_MANAGER and PROJECT_MANAGER)

@@ -30,7 +30,8 @@ public class DepartmentService {
 
     public Department getDepartmentById(int id) {
         Optional<Department> department = departmentRepository.findById(id);
-        return department.orElse(null);
+        if (department.isPresent()) return department.get();
+        else throw new RuntimeException("Department Not Found");
     }
 
     public Department updateDepartmentByID(int id, DepartmentInputDTO departmentInputDTO) {

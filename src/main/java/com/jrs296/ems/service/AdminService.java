@@ -69,8 +69,7 @@ public class AdminService {
                     deptManager.setRole("USER");
                     employeeService.saveEmployee(deptManager);
 
-                    //Department Changes
-                    department.getUnAssignedToProject().add(deptManager);
+                    department.setDepartmentID(-1);
                     departmentService.saveDepartment(department);
                 }
             } else if (Objects.equals(assignManagerDTO.getAssignToRole(), "PROJECT_MANAGER")) {
@@ -92,7 +91,6 @@ public class AdminService {
 
                     //Department Changes
                     Department projectManagerDepartment = projectManager.getEmployeeDepartment();
-//                    projectManagerDepartment.getAllEmployees().add(projectManager);
                     projectManagerDepartment.setDepartmentManagerID(-1);
                     departmentService.saveDepartment(projectManagerDepartment);
                 }
@@ -101,22 +99,36 @@ public class AdminService {
             //Update Employee
             employee.setRole(assignManagerDTO.getAssignToRole());
             if (Objects.equals(assignManagerDTO.getAssignToRole(), "DEPT_MANAGER")) {
+                //Department Changes
+                Department newDepartment = departmentService.getDepartmentById(assignManagerDTO.getAssignToRoleID());
+                Department oldDepartment = employee.getEmployeeDepartment();
+                if (oldDepartment != null) {
+                    oldDepartment.setDepartmentManagerID(-1);
+                    departmentService.saveDepartment(oldDepartment);
+                }
+                newDepartment.setDepartmentManagerID(employee.getEmployeeId());
+                departmentService.saveDepartment(newDepartment);
+
+
                 //Employee Changes
                 employee.setEmployeeProject(null);
                 employee.setRole("DEPT_MANAGER");
                 employee.setEmployeeDepartment(departmentService.getDepartmentById(assignManagerDTO.getAssignToRoleID()));
                 employeeService.saveEmployee(employee);
 
-                //Department Changes
-                Department department = departmentService.getDepartmentById(assignManagerDTO.getAssignToRoleID());
-                department.setDepartmentManagerID(employee.getEmployeeId());
-                department.getUnAssignedToProject().add(employee);
-                departmentService.saveDepartment(department);
+
             } else {
+                Department newDepartment = departmentService.getDepartmentById(projectService.getProjectById(assignManagerDTO.getAssignToRoleID()).getProjectDepartment().getDepartmentID());
+                Department oldDepartment = employee.getEmployeeDepartment();
+                if (oldDepartment != null && oldDepartment.getDepartmentManagerID() == employee.getEmployeeId()) {
+                    oldDepartment.setDepartmentManagerID(-1);
+                    departmentService.saveDepartment(oldDepartment);
+                }
+
                 //Employee Changes
                 employee.setEmployeeProject(projectService.getProjectById(assignManagerDTO.getAssignToRoleID()));
                 employee.setRole("PROJECT_MANAGER");
-                employee.setEmployeeDepartment(departmentService.getDepartmentById(projectService.getProjectById(assignManagerDTO.getAssignToRoleID()).getProjectDepartment().getDepartmentID()));
+                employee.setEmployeeDepartment(newDepartment);
                 employeeService.saveEmployee(employee);
 
                 //Project Changes
@@ -161,7 +173,6 @@ public class AdminService {
 
                 //Department Changes
                 Department projectManagerDepartment = projectManager.getEmployeeDepartment();
-//                projectManagerDepartment.getAllEmployees().add(projectManager);
                 departmentService.saveDepartment(projectManagerDepartment);
             }
 
@@ -218,7 +229,6 @@ public class AdminService {
             newProject.getProjectEmployees().add(employee);
             projectService.saveProject(newProject);
         } else {
-            newDepartment.getUnAssignedToProject().add(employee);
             employee.setEmployeeDepartment(newDepartment);
             employee.setEmployeeProject(null);
         }

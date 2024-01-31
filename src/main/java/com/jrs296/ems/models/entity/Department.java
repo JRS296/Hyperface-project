@@ -34,19 +34,14 @@ public class Department {
     @JsonIgnore
     private List<Employee> allEmployees; //generated
 
-    @Transient
-    private List<Employee> unAssignedToProject; //null - to be assigned
-
     public Department () {
         departmentProjects = new ArrayList<Project>(3);
         allEmployees = new ArrayList<Employee>(10);
-        unAssignedToProject = new ArrayList<Employee>(10);
     };
     public Department(String departmentName) {
         this.departmentName = departmentName;
         departmentProjects = new ArrayList<Project>(3);
         allEmployees = new ArrayList<Employee>(10);
-        unAssignedToProject = new ArrayList<Employee>(10);
     }
 
     public Department(String departmentName, int departmentManagerID) {
@@ -54,6 +49,5 @@ public class Department {
         this.departmentName = departmentName;
         departmentProjects = new ArrayList<Project>(3);
         allEmployees = new ArrayList<Employee>(10);
-        unAssignedToProject = new ArrayList<Employee>(10);
     }
 }

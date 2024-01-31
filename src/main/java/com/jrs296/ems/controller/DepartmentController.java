@@ -23,7 +23,7 @@ public class DepartmentController {
     // Auth + General Access
     @GetMapping("") // DONE
     public ResponseEntity<ResponseObject<List<DepartmentOutputDTO>>> getAllDepartments() {
-        return ResponseEntity.ok().body(new ResponseObject<>("Retrieved Departments Successfully.", 200, DepartmentOutputDTO.toListDepartmentOutputDTO(departmentService.fetchAllDepartments())));
+        return ResponseEntity.ok().body(new ResponseObject<>("Retrieved All Departments Successfully.", 200, DepartmentOutputDTO.toListDepartmentOutputDTO(departmentService.fetchAllDepartments())));
     }
 
     @GetMapping("/{id}") // DONE
@@ -32,16 +32,16 @@ public class DepartmentController {
     }
 
     // ADMIN ONLY
-    @PutMapping("/{id}") // DONE
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<ResponseObject<Department>> updateDepartment(@PathVariable("id") int id, @Valid @RequestBody DepartmentInputDTO departmentInputDTO) {
-        return ResponseEntity.ok().body(new ResponseObject<>("Department Updated Successfully.", 200, departmentService.updateDepartmentByID(id, departmentInputDTO)));
-    }
-
     @PostMapping("") // DONE
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<ResponseObject<DepartmentOutputDTO>>  saveDepartment(@Valid @RequestBody DepartmentInputDTO departmentInputDTO) {
         return ResponseEntity.ok().body(new ResponseObject<>("Department Created Successfully.", 200, DepartmentOutputDTO.toDepartmentOutputDTO(departmentService.saveDepartment(departmentInputDTO.toDepartment()))));
+    }
+
+    @PutMapping("/{id}") // DONE
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<ResponseObject<Department>> updateDepartment(@PathVariable("id") int id, @Valid @RequestBody DepartmentInputDTO departmentInputDTO) {
+        return ResponseEntity.ok().body(new ResponseObject<>("Department Updated Successfully.", 200, departmentService.updateDepartmentByID(id, departmentInputDTO)));
     }
 
     @DeleteMapping("/{id}") // DONE

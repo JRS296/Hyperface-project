@@ -33,7 +33,7 @@ public class DepartmentOutputDTO {
     public static DepartmentOutputDTO toDepartmentOutputDTO(Department department) {
         List<EmployeeOutputDTO> filteredEmployees = EmployeeOutputDTO.toListEmployeesOutputDTO(department.getAllEmployees())
         .stream()
-                .filter(employee -> employee.getEmployeeProjectID() == -1)
+                .filter(employee -> employee.getEmployeeProjectID() == -1) //Return all employees that are unassigned to projects
                 .toList();
 
         return new DepartmentOutputDTO(department.getDepartmentID(), department.getDepartmentManagerID(), department.getDepartmentName(), ProjectOutputDTO.toListProjectOutputDTO(department.getDepartmentProjects()), filteredEmployees);

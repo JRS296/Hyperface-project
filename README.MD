@@ -1,2 +1,46 @@
 # Hyperface-project
 Java Spring Boot Internship Project
+
+Briefing on Controller Flow:
+
+http://localhost:8080   -   root
+
+/test - [✅] - TestController
+
+/api/auth - AuthController
+- (GET) /test                   - [✅] - test Controller, verifies pre-authorize for all roles.
+- (GET) /user/userProfile       - [✅] - test Controller, verifies pre-authorize for all roles.
+- (GET) /admin/adminProfile     - [✅] - test Controller, verifies pre-authorize for all roles.
+- (GET) /manager/managerProfile - [✅] - test Controller, verifies pre-authorize for all roles.
+- (POST) /register              - [✅] - all employees are to register, role defaults to USER, Admin is pre-created, ProjectID and DepartmentID == null
+- (POST) /login                 - [✅] - username and password
+
+/api/assign - AdminController
+- (GET) /authority - [✅] - Test Endpoint, returns authorities of currently logged-in user
+- (PUT) /manager   - [ ] - Assigns Role change to either department or project - ONLY if Department (or) Project exists
+- (PUT) /employee  - [ ] -  Assigns Project and Department to an employee
+  TODO - TestCases for manager and employee, specific to migration between departments (***)
+
+/api/service/department - DepartmentController ✅
+- (GET) /        - [✅] - ALL - Get all departments
+- (GET) /{id}    - [✅] - ALL - Get department by id
+- (POST) /       - [✅] - ADMIN - Create a department
+- (PUT) /        - [✅] - ADMIN - Update department (only name of department)
+- (DELETE) /{id} - [✅] - ADMIN - Delete department by id
+
+/api/service/project - ProjectController
+- (GET) /        - [✅] - ALL - Get all projects
+- (GET) /{id}    - [✅] - ALL - Get project by id
+- (POST) /       - [ ] - ADMIN, DEPT_MANAGER - Create a project*
+- (PUT) /        - [ ] - ADMIN, DEPT_MANAGER - Update project (only name of project and *assigned department)
+- (DELETE) /{id} - [ ] - ADMIN, DEPT_MANAGER - Delete project by id*
+  TODO - Scoped Handling (DEPT_MANAGER)
+  TODO - TestCases for PUT and DELETE
+
+/api/service/employee - EmployeeController
+- (GET) /        - [✅] - ALL - Get all employees
+- (GET) /{id}    - [✅] - ALL - Get employee by id
+- (PUT) /        - [ ] - USER - Update employee (name, username, password and email)**
+- (DELETE) /{id} - [ ] - ADMIN, DEPT_MANAGER, PROJECT_MANAGER - Delete employee by id*
+  TODO - User Specific data change (PUT)
+  TODO - Scoped Handling (DEPT_MANAGER and PROJECT_MANAGER)

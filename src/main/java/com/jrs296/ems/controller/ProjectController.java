@@ -1,8 +1,8 @@
 package com.jrs296.ems.controller;
 
-import com.jrs296.ems.exceptions.ResourceNotFoundException;
 import com.jrs296.ems.models.DTOs.InputDTOs.ProjectInputDTO;
 import com.jrs296.ems.models.DTOs.OutputDTOs.ProjectOutputDTO;
+import com.jrs296.ems.models.DTOs.OutputDTOs.ResponseObject;
 import com.jrs296.ems.models.entity.Department;
 import com.jrs296.ems.models.entity.Project;
 import com.jrs296.ems.service.DepartmentService;
@@ -19,47 +19,41 @@ import java.util.List;
 @RestController
 @RequestMapping("api/service/project")
 public class ProjectController {
-    
+
     @Autowired
     private ProjectService projectService;
 
     @Autowired
     private DepartmentService departmentService;
 
-    // General Access
-    @GetMapping("")
-    public List<ProjectOutputDTO> getAllProjects() {
-        return ProjectOutputDTO.toListProjectOutputDTO(projectService.fetchAllProjects());
+    // Auth + General Access
+    @GetMapping("") //DONE
+    public ResponseEntity<ResponseObject<List<ProjectOutputDTO>>> getAllProjects() {
+        return ResponseEntity.ok().body(new ResponseObject<>("Retrieved All Projects Successfully.", 200, ProjectOutputDTO.toListProjectOutputDTO(projectService.fetchAllProjects())));
     }
 
-    @GetMapping("/{id}")
-    public ProjectOutputDTO getProjectById(@PathVariable("id") int id) {
-        return ProjectOutputDTO.toProjectOutputDTO(projectService.getProjectById(id));
+    @GetMapping("/{id}") //DONE
+    public ResponseEntity<ResponseObject<ProjectOutputDTO>> getProjectById(@PathVariable("id") int id) {
+        return ResponseEntity.ok().body(new ResponseObject<>("Retrieved Project By ID Successfully.", 200, ProjectOutputDTO.toProjectOutputDTO(projectService.getProjectById(id))));
     }
 
-    //Restricted Access
-    @PostMapping("")
+    // ADMIN and DEPT_MANAGERS ONLY
+    @PostMapping("") // ADMIN DONE
     @PreAuthorize("hasAnyAuthority('ADMIN', 'DEPT_MANAGER')")
-    public ProjectOutputDTO createNewProject(@Valid @RequestBody ProjectInputDTO projectInputDTO) {
-        Department projectDepartment = departmentService.getDepartmentById(projectInputDTO.getProjectDepartmentID());
-        Project project = projectService.saveProject(projectInputDTO.toProject(projectDepartment));
-        projectDepartment.getDepartmentProjects().add(project);
-        departmentService.saveDepartment(projectDepartment);
-        return new ResponseEntity<>(ProjectOutputDTO.toProjectOutputDTO(project), HttpStatus.CREATED).getBody();
+    public ResponseEntity<ResponseObject<ProjectOutputDTO>> createNewProject(@Valid @RequestBody ProjectInputDTO projectInputDTO) {
+        return ResponseEntity.ok().body(new ResponseObject<>("Project Created Successfully.", 200, ProjectOutputDTO.toProjectOutputDTO(projectService.saveProjectInputDTO(projectInputDTO))));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}") // ADMIN DONE
     @PreAuthorize("hasAnyAuthority('ADMIN', 'DEPT_MANAGER')")
-    public Project updateProject(@PathVariable("id") int id, @Valid @RequestBody ProjectInputDTO projectInputDTO) {
-        Department department = departmentService.getDepartmentById(projectInputDTO.getProjectDepartmentID());
-
-        return projectService.updateEmployeeById(id, projectInputDTO.toProject(department));
+    public ResponseEntity<ResponseObject<ProjectOutputDTO>> updateProject(@PathVariable("id") int id, @Valid @RequestBody ProjectInputDTO projectInputDTO) {
+        return ResponseEntity.ok().body(new ResponseObject<>("Project Updated Successfully.", 200, ProjectOutputDTO.toProjectOutputDTO(projectService.updateProjectById(id, projectInputDTO))));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'DEPT_MANAGER')")
-    public String deleteProject(@PathVariable("id") int id) {
+    public ResponseEntity<ResponseObject<String>> deleteProject(@PathVariable("id") int id) {
         // Place all Employees in Unassigned List, each employee's Project to null
-        return projectService.deleteProjectById(id);
+        return ResponseEntity.ok().body(new ResponseObject<>("Project Deleted Successfully.", 200, projectService.deleteProjectById(id)));
     }
 }
