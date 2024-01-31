@@ -3,10 +3,12 @@ package com.jrs296.ems.models.DTOs.OutputDTOs;
 
 
 import com.jrs296.ems.models.entity.Department;
+import com.jrs296.ems.models.entity.Employee;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 public class DepartmentOutputDTO {
@@ -29,10 +31,15 @@ public class DepartmentOutputDTO {
     }
 
     public static DepartmentOutputDTO toDepartmentOutputDTO(Department department) {
-        return new DepartmentOutputDTO(department.getDepartmentID(), department.getDepartmentManagerID(), department.getDepartmentName(), ProjectOutputDTO.toListProjectOutputDTO(department.getDepartmentProjects()), EmployeeOutputDTO.toListEmployeesOutputDTO(department.getUnAssignedToProject()));
+        List<EmployeeOutputDTO> filteredEmployees = EmployeeOutputDTO.toListEmployeesOutputDTO(department.getAllEmployees())
+        .stream()
+                .filter(employee -> employee.getEmployeeProjectID() == -1)
+                .toList();
+
+        return new DepartmentOutputDTO(department.getDepartmentID(), department.getDepartmentManagerID(), department.getDepartmentName(), ProjectOutputDTO.toListProjectOutputDTO(department.getDepartmentProjects()), filteredEmployees);
     }
 
-    public static List<DepartmentOutputDTO> toListProjectOutputDTO(List<Department> departments) {
+    public static List<DepartmentOutputDTO> toListDepartmentOutputDTO(List<Department> departments) {
         List<DepartmentOutputDTO> outputDTOS = new ArrayList<DepartmentOutputDTO>(departments.size());
         for (Department department : departments) {
             outputDTOS.add(toDepartmentOutputDTO(department));

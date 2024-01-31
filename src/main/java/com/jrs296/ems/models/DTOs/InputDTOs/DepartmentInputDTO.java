@@ -13,10 +13,6 @@ public class DepartmentInputDTO {
     private String departmentName;
 
     public Department toDepartment() {
-        Department temp = new Department(departmentName);
-        temp.setAllEmployees(new ArrayList<>(10));
-        temp.setUnAssignedToProject(new ArrayList<>(10));
-        temp.setDepartmentProjects(new ArrayList<>(3));
-        return temp;
+        return new Department(departmentName);
     }
 }

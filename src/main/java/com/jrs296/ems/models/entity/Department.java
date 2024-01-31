@@ -38,22 +38,22 @@ public class Department {
     private List<Employee> unAssignedToProject; //null - to be assigned
 
     public Department () {
-        departmentProjects = new ArrayList<Project>();
-        allEmployees = new ArrayList<Employee>();
-        unAssignedToProject = new ArrayList<Employee>();
+        departmentProjects = new ArrayList<Project>(3);
+        allEmployees = new ArrayList<Employee>(10);
+        unAssignedToProject = new ArrayList<Employee>(10);
     };
     public Department(String departmentName) {
         this.departmentName = departmentName;
-        departmentProjects = new ArrayList<Project>();
-        allEmployees = new ArrayList<Employee>();
-        unAssignedToProject = new ArrayList<Employee>();
+        departmentProjects = new ArrayList<Project>(3);
+        allEmployees = new ArrayList<Employee>(10);
+        unAssignedToProject = new ArrayList<Employee>(10);
     }
 
     public Department(String departmentName, int departmentManagerID) {
         this.departmentManagerID = departmentManagerID;
         this.departmentName = departmentName;
-        departmentProjects = new ArrayList<Project>();
-        allEmployees = new ArrayList<Employee>();
-        unAssignedToProject = new ArrayList<Employee>();
+        departmentProjects = new ArrayList<Project>(3);
+        allEmployees = new ArrayList<Employee>(10);
+        unAssignedToProject = new ArrayList<Employee>(10);
     }
 }

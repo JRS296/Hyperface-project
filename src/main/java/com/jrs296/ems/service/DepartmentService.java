@@ -1,5 +1,6 @@
 package com.jrs296.ems.service;
 
+import com.jrs296.ems.models.DTOs.InputDTOs.DepartmentInputDTO;
 import com.jrs296.ems.models.entity.Department;
 import com.jrs296.ems.models.entity.Employee;
 import com.jrs296.ems.repository.DepartmentRepository;
@@ -32,25 +33,17 @@ public class DepartmentService {
         return department.orElse(null);
     }
 
-    public Department updateEmployeeById(int id, Department department) {
+    public Department updateDepartmentByID(int id, DepartmentInputDTO departmentInputDTO) {
         Optional<Department> tempDepartment = departmentRepository.findById(id);
 
         if (tempDepartment.isPresent()) {
             Department originalEmployee = tempDepartment.get();
 
-            if (Objects.nonNull(department.getDepartmentName()) && !"".equalsIgnoreCase(department.getDepartmentName())) {
-                originalEmployee.setDepartmentName(department.getDepartmentName());
-            }
-//            if (Objects.nonNull(department.getDepartmentEmployees())) {
-//                originalEmployee.setDepartmentEmployees(department.getDepartmentEmployees());
-//            }
-//            if (Objects.nonNull(department.getDepartmentProjects())) {
-//                originalEmployee.setDepartmentProjects(department.getDepartmentProjects());
-//            }
+            originalEmployee.setDepartmentName(departmentInputDTO.getDepartmentName());
 
             return departmentRepository.save(originalEmployee);
         }
-        return null;
+        throw new RuntimeException("Department specified does not exist");
     }
 
     public String deleteDepartmentById(int id) {
@@ -60,6 +53,7 @@ public class DepartmentService {
             for (Employee employee : employees) {
                 employee.setEmployeeProject(null);
                 employee.setEmployeeDepartment(null);
+                employee.setRole("USER");
                 employeeService.saveEmployee(employee);
             }
 

@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -69,7 +70,7 @@ public class AdminService {
                     employeeService.saveEmployee(deptManager);
 
                     //Department Changes
-                    department.getAllEmployees().add(deptManager);
+                    department.getUnAssignedToProject().add(deptManager);
                     departmentService.saveDepartment(department);
                 }
             } else if (Objects.equals(assignManagerDTO.getAssignToRole(), "PROJECT_MANAGER")) {
