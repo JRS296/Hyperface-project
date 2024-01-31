@@ -1,0 +1,862 @@
+{
+	"info": {
+		"_postman_id": "fb8a3417-8b1e-483b-ae61-06157be61c10",
+		"name": "EMS Test suite",
+		"description": "API endpoints for testing EMS application.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Department API's",
+			"item": [
+				{
+					"name": "All Departments",
+					"id": "51836a8a-4fc8-46c3-a564-4a4ac1ace925",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/department"
+					},
+					"response": []
+				},
+				{
+					"name": "Department By ID",
+					"id": "43434d57-53f9-4692-8f4e-bdaca3edc2f8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/department/1"
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE Department",
+					"id": "2c22bb6e-e6a8-4853-87df-4b35ced87915",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwNjUyNzU3MCwiaWF0IjoxNzA2NTI1NzcwfQ.7tNpCFY-U1peMMXE-GrEVBHhOZDS5a4N2Hq7zYIVyx8"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"departmentName\": \"dep2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/service/department"
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE Department - Empty body",
+					"id": "4e25adf4-943f-452f-87dc-1a891eb82788",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/department"
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE Department - Empty JSON",
+					"id": "d9f60e58-5dbb-4de9-9c95-b3235b4414cd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/department"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Department",
+					"id": "f334a350-1986-4cde-a281-b284d2b34ac5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"departmentName\": \"test1001\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/department/1"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Department - failed indexing",
+					"id": "e52a4a85-4357-4113-8b00-985bdd6a4290",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"departmentName\": \"test1001\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/department/145"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Department - Empty JSON",
+					"id": "eab06d8a-6515-4cf6-b080-84bc8b22e0bb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/department/1"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Department - Empty BODY",
+					"id": "e66b1d57-58f7-4e45-9d90-744605088d22",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/department/1"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE - Persist Employees",
+					"id": "0c91e483-9d81-4b07-a8ca-dbea7c62270a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/api/department/1"
+					},
+					"response": []
+				}
+			],
+			"id": "b741c688-807c-477c-9c46-568348101515",
+			"description": "Access Specifiers (Global Department Space):\n\n- GET - By Admins, Managers and Employees\n- POST - By Admins only - Admin allows for creation of Departments, they assign a department to a Manager (With this step, that employee is added to the ~~deptUnassignedPool~~ + Made manager of that Dept)\n- PUT - By Admins only - Admin allows for editing the manager of Departments, as well as their name, they can re-assign a department to a Manager (With this step, that employee is added to the ~~deptUnassignedPool~~ + Made manager of that Dept)\n- DELETE - By Admins ONLY"
+		},
+		{
+			"name": "Project API's",
+			"item": [
+				{
+					"name": "All Projects",
+					"id": "d771af56-678a-4ab5-9a92-ecc2b500edf9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/project"
+					},
+					"response": []
+				},
+				{
+					"name": "Projects By ID",
+					"id": "84d5461e-fb36-4845-b4bf-4e63dfb36e47",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/project/1"
+					},
+					"response": []
+				},
+				{
+					"name": "All Projects By Department",
+					"id": "a3abac26-b7ca-4d04-8801-a0791dff5591",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/project"
+					},
+					"response": []
+				},
+				{
+					"name": "Projects By ID from Department",
+					"id": "91e26809-a071-4db7-9299-4d34ff8b16ef",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/project/1"
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE Project",
+					"id": "7302d884-a070-4c9b-aec2-66353098afdf",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwNjU0NDk3OCwiaWF0IjoxNzA2NTQzMTc4fQ.DPNYh4_kRV3PJiOKORNFBVKN8XnaKsoFxOhOB3o_B6M"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"projectName\": \"test_project_1\",\n    \"projectDepartmentID\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/service/project"
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE Project - Empty body",
+					"id": "d8d44c86-bc91-4b33-b4c4-e210e002eeb8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/project"
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE Project - Empty JSON",
+					"id": "7909ad43-abcc-4d53-8b85-e1c913482e98",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/project"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Project",
+					"id": "20ea9678-e537-4cda-ade1-11d06a08fb01",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwNjU0NDk3OCwiaWF0IjoxNzA2NTQzMTc4fQ.DPNYh4_kRV3PJiOKORNFBVKN8XnaKsoFxOhOB3o_B6M"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"departmentName\": \"test1001\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/service/project/1"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Project - failed indexing",
+					"id": "87bcfa66-7dbe-48db-81dc-1e2cd4090016",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"departmentName\": \"test1001\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/project/145"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Project - Empty JSON",
+					"id": "17268aad-52f7-4190-92ff-8f88f59a43d6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/project/1"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Project - Empty BODY",
+					"id": "14075051-b0bf-454f-ae57-91dce41b72da",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/project/1"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE - Persist Employees",
+					"id": "a9258702-6c8c-444e-a6e0-76eaac66cf38",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/api/project/1"
+					},
+					"response": []
+				}
+			],
+			"id": "20f41e2c-5abc-4c48-9f3a-7bf5aae160a8",
+			"description": "Access Specifiers (Global Project Space):\n\n- GET - By Admins, Managers and Employees\n- POST - By Admins and Dept Managers only - allows for creation of Projects, they assign a project to a Manager (With this step, that employee is added to the ProjectEmployees + Made manager of that Project)\n- PUT - By Admins and Dept Managers only - allows for editing the manager of Projects, as well as the Project name, they can re-assign a project to a Manager (With this step, that employee is removed from his previous place, added to the ProjectEmployee Pool + Made manager of that Project, old Project manager is removed from project and placed in UnAssignedDepartmentPool)\n- DELETE - By Admins and Dept Mangaers ONLY. Project Dissolved, all employees placed in UnAssigned Roster of Dept."
+		},
+		{
+			"name": "Employee API's",
+			"item": [
+				{
+					"name": "All Employees",
+					"id": "e7982e77-29c2-46b7-b5d4-e02bccadfc72",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0NSIsImV4cCI6MTcwNjUyMjc1NSwiaWF0IjoxNzA2NTIwOTU1fQ.P9xRHglZCC662YDMJvlG1coBZ5DtUHV0d_OrRT7kNgk"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/service/employee"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Employee By ID",
+					"id": "f106a3a4-18bf-4abe-a2f3-5356cad2cd49",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/service/employee"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Employee Stuff",
+					"id": "26981fa8-ad56-4025-857a-249e3629002b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"employeeName\": \"test5-sdfsdf\",\n    \"userName\": \"sdfsdfsdf\",    \n    \"employeeEmail\": \"sdfsdfsdfsd@gmail.com\",\n    \"password\": \"sdfsdfsdfsdfsdf\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/service/employee/edit"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Copy 2",
+					"id": "737283a0-8c76-4143-8f01-628e8b25371c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/api/department/1"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE - Persist Employees Copy 2",
+					"id": "5a992a9f-72a4-490f-bb24-6626d873ee75",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/api/department/1"
+					},
+					"response": []
+				}
+			],
+			"id": "2dccbc61-dee2-4aa9-b0f6-929316217940",
+			"description": "Access Specifiers (Global Employee Space):\n\n- GET - By Admins, Managers and Employees\n    \n- POST - 2 CASES\n    \n    - Normal Employee Creation - Anyone can make employee - Salary, DepID, ProjID = null, **IsManager = false (NOT VISIBLE OR EDITABLE BY ANYONE OTHER THAN ADMIN)**\n        \n    - Manager Creation - Admin can toggle IsManager - **ONLY VISIBLE TO ADMIN.**\n        \n- PUT - By Admins and Managers (Both Dept and Projects) only - allows for editing the Salary, Dept and Project of Employee (**VERY IMPORTANT)** Edit Scope goes only as far as scope of Manager - If manager is a dept, can edit within scope of his own dept, **NOT ANY OTHER DEPT**. vice versa with projects.\n    \n    - If removed from a project, removed from projectEmployees, placed in UnAssigned within Dept\n        \n    - if removed from dept, completely removed, all set to null.\n        \n- DELETE - By Admins and Managers (Both Dept and Projects) only, **WITHIN THEIR OWN SCOPE OF CONTROL**.\n    \n    - Yeeted out of the system."
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Regsiter a New Employee",
+					"id": "9aae0563-72c8-4979-8a30-5fc58e609f45",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"employeeName\": \"test5-user\",\n    \"userName\": \"test5\",    \n    \"employeeEmail\": \"test5@gmail.com\",\n    \"password\": \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/auth/register"
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"id": "70c4fc23-3c8c-4d45-9322-d817e0fbd203",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MyIsImV4cCI6MTcwNjE3MDc2OSwiaWF0IjoxNzA2MTY4OTY5fQ.A_d9gQYu1sinQZLyGjrC_dczZ9xMT1Vhvx7MC1smNX4"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/auth/user/userProfile"
+					},
+					"response": []
+				},
+				{
+					"name": "admin",
+					"id": "f2c82319-d502-444e-9be9-11466a16c2d8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MyIsImV4cCI6MTcwNjE3MDc2OSwiaWF0IjoxNzA2MTY4OTY5fQ.A_d9gQYu1sinQZLyGjrC_dczZ9xMT1Vhvx7MC1smNX4"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/auth/admin/adminProfile"
+					},
+					"response": []
+				},
+				{
+					"name": "manager",
+					"id": "7342f841-65f9-4fa9-8494-24188f46506b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{user}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/auth/manager/managerProfile"
+					},
+					"response": []
+				},
+				{
+					"name": "Login - User",
+					"id": "9e8be28e-7234-4c0d-bcfc-8d8995fddaa1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"test6\",\n    \"password\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/auth/generateToken"
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Manager",
+					"id": "0fd82bd5-cc5a-4d54-a808-3b03f06a0a96",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"test3\",\n    \"password\": \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Admin",
+					"id": "d4bccada-129b-40f5-b9de-641fcf23ccb5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"test6\",\n    \"password\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/auth/generateToken"
+					},
+					"response": []
+				},
+				{
+					"name": "test",
+					"id": "ac3cad05-d281-4ce5-95c8-2c65a364976b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"id": "6387b8df-24e6-43db-907a-da40700ae419"
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "ASSIGN Manager Role",
+					"id": "a115dff8-e7c1-44f7-b56b-21701356ab05",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwNjU5NjYwNSwiaWF0IjoxNzA2NTk0ODA1fQ.GVD6yUa0oeBL7kOWwjFfX9DGjtQ4zA5t-Q-M1W4Fg54"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"employeeID\": 2,\n    \"assignToRole\": \"DEPT_MANAGER\",\n    \"assignToRoleID\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/assign/manager"
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Employee to Project/Dept",
+					"id": "4bf103ab-cb5a-4881-8052-8d1e520d2cb0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwNjYwMTY5MiwiaWF0IjoxNzA2NTk5ODkyfQ.0Nv476oIA7xzFk6y2g55-hLK1O9WkqYEdw0DlwZM2Oo"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"employeeID\": \"\",\n    \"assignToDepartmentID\": 1,\n    \"assignToProjectID\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/assign/employee"
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Employee to Dept - without ProjectID",
+					"id": "65152018-9dbf-4efd-8198-1b7b50f7ef26",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwNjYwMTY5MiwiaWF0IjoxNzA2NTk5ODkyfQ.0Nv476oIA7xzFk6y2g55-hLK1O9WkqYEdw0DlwZM2Oo"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"employeeID\": \"\",\n    \"assignToDepartmentID\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/assign/employee"
+					},
+					"response": []
+				},
+				{
+					"name": "get auth?",
+					"id": "5fcf5db4-16fa-461f-b7ae-a747e3517b67",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MSIsImV4cCI6MTcwNjU5NzMwNCwiaWF0IjoxNzA2NTk1NTA0fQ.0V7mPXTYRSLoGlKdy3lGvRyI4Eg9YalrQv50ViSO-tY"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/assign/authority"
+					},
+					"response": []
+				}
+			],
+			"id": "829a7897-13b8-48c0-91f8-e6396a75eba5"
+		},
+		{
+			"name": "\\",
+			"id": "b63313eb-4687-4ca3-a908-384208f8e976",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "827fae00-9846-414c-9dcd-f98a5fd1fb25",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f9885098-6e41-48d5-b2a5-0d6170c077be",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "user",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MSIsImV4cCI6MTcwNjE3MDQ1NiwiaWF0IjoxNzA2MTY4NjU2fQ.b7sXBezQXJmKa7R_qj5PF0S4A0ikRLebCHubCV8mwxI"
+		},
+		{
+			"key": "admin",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MSIsImV4cCI6MTcwNjE3MDQ1NiwiaWF0IjoxNzA2MTY4NjU2fQ.b7sXBezQXJmKa7R_qj5PF0S4A0ikRLebCHubCV8mwxI"
+		},
+		{
+			"key": "manager",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MyIsImV4cCI6MTcwNjE3MDYzMCwiaWF0IjoxNzA2MTY4ODMwfQ.lqSxeT2gnw2re-c8rUGEU-x5vWSSeCtGFcq8ycMnF6o"
+		}
+	]
+}
