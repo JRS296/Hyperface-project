@@ -17,9 +17,13 @@ class EmsApplicationTests {
 	private TestRestTemplate restTemplate;
 
 	@Test
-	public void shouldPassIfStringMatches() throws Exception {
+	public void BuildStepTest() throws Exception {
 		assert(restTemplate.getForObject("http://localhost:" + port + "/api/test",
 				String.class)).contains("Build Successful, server up and running");
 	}
 
+	@Test
+	void contextLoads() {
+		// This test ensures that the Spring application context loads without errors
+	}
 }
