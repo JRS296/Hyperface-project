@@ -20,5 +20,23 @@ public class ProjectEditDTO {
         temp.setProjectDepartment(department);
         return temp;
     }
+
+    public ProjectEditDTO() {}
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public int getProjectDepartmentID() {
+        return projectDepartmentID;
+    }
+
+    public void setProjectDepartmentID(int projectDepartmentID) {
+        this.projectDepartmentID = projectDepartmentID;
+    }
 }
 

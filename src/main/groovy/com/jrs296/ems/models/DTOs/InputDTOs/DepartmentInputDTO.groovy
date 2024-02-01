@@ -7,7 +7,9 @@ import jakarta.validation.constraints.NotNull;
 public class DepartmentInputDTO {
 
     @NotNull(message = "Department Name is required.")
-    private String departmentName;
+    String departmentName;
+
+    DepartmentInputDTO () {}
 
     public Department toDepartment() {
         return new Department(departmentName);

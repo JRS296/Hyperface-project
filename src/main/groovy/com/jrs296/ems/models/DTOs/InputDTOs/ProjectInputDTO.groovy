@@ -21,4 +21,22 @@ public class ProjectInputDTO {
         temp.setProjectManagerID(-1);
         return temp;
     }
+
+    public ProjectInputDTO() {}
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public int getProjectDepartmentID() {
+        return projectDepartmentID;
+    }
+
+    public void setProjectDepartmentID(int projectDepartmentID) {
+        this.projectDepartmentID = projectDepartmentID;
+    }
 }

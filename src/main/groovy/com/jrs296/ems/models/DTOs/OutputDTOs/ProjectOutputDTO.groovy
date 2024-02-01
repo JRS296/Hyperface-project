@@ -35,4 +35,46 @@ public class ProjectOutputDTO {
         }
         return outputDTOS;
     }
+
+    public ProjectOutputDTO() {}
+
+    public int getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(int projectID) {
+        this.projectID = projectID;
+    }
+
+    public int getProjectManagerID() {
+        return projectManagerID;
+    }
+
+    public void setProjectManagerID(int projectManagerID) {
+        this.projectManagerID = projectManagerID;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public int getProjectDepartmentID() {
+        return projectDepartmentID;
+    }
+
+    public void setProjectDepartmentID(int projectDepartmentID) {
+        this.projectDepartmentID = projectDepartmentID;
+    }
+
+    public List<EmployeeOutputDTO> getProjectEmployees() {
+        return projectEmployees;
+    }
+
+    public void setProjectEmployees(List<EmployeeOutputDTO> projectEmployees) {
+        this.projectEmployees = projectEmployees;
+    }
 }

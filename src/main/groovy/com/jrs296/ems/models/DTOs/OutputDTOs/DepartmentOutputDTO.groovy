@@ -41,4 +41,46 @@ public class DepartmentOutputDTO {
         }
         return outputDTOS;
     }
+
+    public DepartmentOutputDTO() {}
+
+    public int getDepartmentID() {
+        return departmentID;
+    }
+
+    public void setDepartmentID(int departmentID) {
+        this.departmentID = departmentID;
+    }
+
+    public int getDepartmentManagerID() {
+        return departmentManagerID;
+    }
+
+    public void setDepartmentManagerID(int departmentManagerID) {
+        this.departmentManagerID = departmentManagerID;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public List<ProjectOutputDTO> getDepartmentProjects() {
+        return departmentProjects;
+    }
+
+    public void setDepartmentProjects(List<ProjectOutputDTO> departmentProjects) {
+        this.departmentProjects = departmentProjects;
+    }
+
+    public List<EmployeeOutputDTO> getDepartmentEmployeesUnAssignedToProjects() {
+        return departmentEmployeesUnAssignedToProjects;
+    }
+
+    public void setDepartmentEmployeesUnAssignedToProjects(List<EmployeeOutputDTO> departmentEmployeesUnAssignedToProjects) {
+        this.departmentEmployeesUnAssignedToProjects = departmentEmployeesUnAssignedToProjects;
+    }
 }

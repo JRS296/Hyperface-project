@@ -5,6 +5,8 @@ public class EmployeeLoginInputDTO { //Login
     private String username;
     private String password;
 
+    EmployeeLoginInputDTO() {}
+
     String getUsername() {
         return username
     }

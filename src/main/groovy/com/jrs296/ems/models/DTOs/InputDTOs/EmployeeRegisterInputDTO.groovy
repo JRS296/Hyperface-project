@@ -38,4 +38,46 @@ public class EmployeeRegisterInputDTO {
     public Employee toEmployee() {
         return new Employee(employeeName, userName, employeeEmail, password);
     }
+
+    public EmployeeRegisterInputDTO() {}
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getEmployeeEmail() {
+        return employeeEmail;
+    }
+
+    public void setEmployeeEmail(String employeeEmail) {
+        this.employeeEmail = employeeEmail;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getEmployeeProjectID() {
+        return employeeProjectID;
+    }
+
+    public void setEmployeeProjectID(int employeeProjectID) {
+        this.employeeProjectID = employeeProjectID;
+    }
 }

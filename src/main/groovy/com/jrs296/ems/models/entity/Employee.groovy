@@ -45,8 +45,7 @@ public class Employee {
         this.employeeEmail = employeeEmail;
     }
 
-    public Employee () {
-    }
+    public Employee () {}
 
     //Getters and Setters
     public int getEmployeeId() {
@@ -120,5 +119,4 @@ public class Employee {
     public void setRole(String role) {
         this.role = role;
     }
-
 }

@@ -28,6 +28,8 @@ public class EmployeeOutputDTO {
         this.role = role;
     }
 
+    public EmployeeOutputDTO() {}
+
     public static EmployeeOutputDTO toEmployeeOutputDTO(Employee employee) {
         int employeeProjectID = -1;
         int employeeDepartmentID = -1;

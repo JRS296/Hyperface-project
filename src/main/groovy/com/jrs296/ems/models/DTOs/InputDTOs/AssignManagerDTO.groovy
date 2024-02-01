@@ -15,5 +15,29 @@ public class AssignManagerDTO { //Login
     @NotNull(message = "Project/Department ID is required.")
     private int assignToRoleID;
 
+    public AssignManagerDTO() {}
 
+    public int getEmployeeID() {
+        return employeeID;
+    }
+
+    public void setEmployeeID(int employeeID) {
+        this.employeeID = employeeID;
+    }
+
+    public String getAssignToRole() {
+        return assignToRole;
+    }
+
+    public void setAssignToRole(String assignToRole) {
+        this.assignToRole = assignToRole;
+    }
+
+    public int getAssignToRoleID() {
+        return assignToRoleID;
+    }
+
+    public void setAssignToRoleID(int assignToRoleID) {
+        this.assignToRoleID = assignToRoleID;
+    }
 }
