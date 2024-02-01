@@ -7,7 +7,7 @@ Java/Apache Groovy Spring Boot Project - Hyperface Internship, January 2024.
 - Week 2 - Testing - 10% Code Coverage (PR [#3](https://github.com/JRS296/Hyperface-project/pull/3))
 - Week 3 - Authentication and Authorization - 100% (PR [#1](https://github.com/JRS296/Hyperface-project/pull/1))
 - Week 4 - Transition to Groovy - 100% (PR [#2](https://github.com/JRS296/Hyperface-project/pull/2))
-
+- 
 ## Project Setup
 
 ### Project Requirements
@@ -153,6 +153,7 @@ TODO - TestCases for PUT and DELETE**
 - [ ] (DELETE) /{id}  - ADMIN, DEPT_MANAGER, PROJECT_MANAGER - Delete employee by id*
 
 **TODO - User Specific data change (PUT) \
+<<<<<<< HEAD
 TODO - Scoped Handling (DEPT_MANAGER and PROJECT_MANAGER)**
 
 ## Testing Coverage
@@ -179,3 +180,4 @@ TODO - Scoped Handling (DEPT_MANAGER and PROJECT_MANAGER)**
 
 ### Scenario Tests
 - [ ] - Scenario Case 1
+TODO - Scoped Handling (DEPT_MANAGER and PROJECT_MANAGER)**
