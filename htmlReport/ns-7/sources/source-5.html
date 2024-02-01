@@ -1,0 +1,187 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > EmployeeRegisterInputDTO</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.jrs296.ems.models.DTOs.InputDTOs</a>
+</div>
+
+<h1>Coverage Summary for Class: EmployeeRegisterInputDTO (com.jrs296.ems.models.DTOs.InputDTOs)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">EmployeeRegisterInputDTO</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (9/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (9/12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.jrs296.ems.models.DTOs.InputDTOs;
+&nbsp;
+&nbsp;import com.jrs296.ems.models.entity.Employee
+&nbsp;import groovy.transform.Canonical;
+&nbsp;import jakarta.validation.constraints.*;
+&nbsp;
+&nbsp;@Canonical
+&nbsp;public class EmployeeRegisterInputDTO {
+&nbsp;    @NotBlank(message = &quot;Invalid Name: Empty name&quot;)
+&nbsp;    @NotNull(message = &quot;Invalid Name: Name is NULL&quot;)
+&nbsp;    @Size(min = 3, max = 30, message = &quot;Invalid Name: Must be of 3 - 30 characters&quot;)
+&nbsp;    private String employeeName;
+&nbsp;
+&nbsp;    @NotBlank(message = &quot;Invalid user-name: Empty user-name&quot;)
+&nbsp;    @NotNull(message = &quot;Invalid user-name: user-name is NULL&quot;)
+&nbsp;    @Size(min = 3, max = 30, message = &quot;Invalid user-name: Must be of 3 - 30 characters&quot;)
+&nbsp;    private String userName;
+&nbsp;
+&nbsp;    @Email(message = &quot;Invalid email&quot;)
+&nbsp;    private String employeeEmail;
+&nbsp;
+&nbsp;    @NotBlank(message = &quot;Invalid password: Empty password&quot;)
+&nbsp;    @NotNull(message = &quot;Invalid password: Password is NULL&quot;)
+&nbsp;    @Size(min = 8, max = 30, message = &quot;Invalid password: Must be of a minimum of 8 characters&quot;)
+&nbsp;//    @Pattern(regexp = &quot;^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&amp;*()-_+=])[a-zA-Z0-9!@#$%^&amp;*()-_+=]{8,}$&quot;, message = &quot;Invalid password, must have a minimum of 8 characters, at least 1 Uppercase, at least 1 number and at least 1 special character&quot;)
+&nbsp;    /*
+&nbsp;    ^: Asserts the start of the string.
+&nbsp;    (?=.*[A-Z]): Positive lookahead assertion for at least one uppercase letter.
+&nbsp;    (?=.*[0-9]): Positive lookahead assertion for at least one digit.
+&nbsp;    (?=.*[!@#$%^&amp;*()-_+=]): Positive lookahead assertion for at least one special character. You can customize the set of special characters inside the square brackets as needed.
+&nbsp;    [a-zA-Z0-9!@#$%^&amp;*()-_+=]{8,}: Matches any combination of uppercase letters, lowercase letters, digits, and specified special characters with a minimum length of 8 characters.
+&nbsp;    $: Asserts the end of the string.
+&nbsp;    */
+&nbsp;    private String password;
+&nbsp;
+&nbsp;    private int employeeProjectID = -1; //Can be null, if provided, is to be verified along with employeeDepartmentID
+&nbsp;
+&nbsp;    public Employee toEmployee() {
+<b class="nc">&nbsp;        return new Employee(employeeName, userName, employeeEmail, password);</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public EmployeeRegisterInputDTO() {}</b>
+&nbsp;
+&nbsp;    public String getEmployeeName() {
+<b class="fc">&nbsp;        return employeeName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setEmployeeName(String employeeName) {
+<b class="fc">&nbsp;        this.employeeName = employeeName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getUserName() {
+<b class="fc">&nbsp;        return userName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setUserName(String userName) {
+<b class="fc">&nbsp;        this.userName = userName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getEmployeeEmail() {
+<b class="fc">&nbsp;        return employeeEmail;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setEmployeeEmail(String employeeEmail) {
+<b class="fc">&nbsp;        this.employeeEmail = employeeEmail;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getPassword() {
+<b class="fc">&nbsp;        return password;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setPassword(String password) {
+<b class="fc">&nbsp;        this.password = password;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getEmployeeProjectID() {
+<b class="nc">&nbsp;        return employeeProjectID;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setEmployeeProjectID(int employeeProjectID) {
+<b class="nc">&nbsp;        this.employeeProjectID = employeeProjectID;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-02-01 16:48</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,176 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > EmployeeController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.jrs296.ems.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: EmployeeController (com.jrs296.ems.controller)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">EmployeeController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">EmployeeController$$SpringCGLIB$$0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.jrs296.ems.controller;
+&nbsp;
+&nbsp;import com.jrs296.ems.exceptions.ResourceNotFoundException;
+&nbsp;import com.jrs296.ems.models.DTOs.InputDTOs.EmployeeLoginInputDTO;
+&nbsp;import com.jrs296.ems.models.DTOs.InputDTOs.EmployeeRegisterInputDTO;
+&nbsp;import com.jrs296.ems.models.DTOs.OutputDTOs.EmployeeOutputDTO;
+&nbsp;import com.jrs296.ems.models.entity.Employee;
+&nbsp;import com.jrs296.ems.service.DepartmentService;
+&nbsp;import com.jrs296.ems.service.EmployeeService;
+&nbsp;import com.jrs296.ems.service.ProjectService;
+&nbsp;import jakarta.validation.Valid;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.security.access.prepost.PreAuthorize;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;api/service/employee&quot;)
+&nbsp;public class EmployeeController {
+&nbsp;    @Autowired
+&nbsp;    private ProjectService projectService;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private DepartmentService departmentService;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private EmployeeService employeeService;
+&nbsp;
+&nbsp;    // GENERAL ACCESS
+&nbsp;    @GetMapping(&quot;&quot;) //DONE
+&nbsp;    public List&lt;EmployeeOutputDTO&gt; getAllEmployees() {
+<b class="nc">&nbsp;        return EmployeeOutputDTO.toListEmployeesOutputDTO(employeeService.fetchAllEmployees());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/{id}&quot;) //DONE
+&nbsp;    public EmployeeOutputDTO getEmployeeByID(@PathVariable(&quot;id&quot;) int id) {
+<b class="nc">&nbsp;        return EmployeeOutputDTO.toEmployeeOutputDTO(employeeService.getEmployeeByID(id));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Get Employees that are unassigned to any projects
+&nbsp;
+&nbsp;    // Get All Employees that are completely unassigned
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    // EMPLOYEE SPECIFIC CHANGES - can edit password, username and name; NOT Dept ID and Project ID, Admin cannot interfere with this
+&nbsp;    @PutMapping(&quot;/edit&quot;) // Done
+&nbsp;    @PreAuthorize(&quot;hasAnyAuthority(&#39;USER&#39;,&#39;PROJECT_MANAGER&#39;, &#39;DEPT_MANAGER&#39;)&quot;)
+&nbsp;    public String updateEmployee(@RequestBody EmployeeRegisterInputDTO employeeRegisterInputDTO) {
+<b class="nc">&nbsp;        return employeeService.updateEmployeeById(employeeRegisterInputDTO);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // EMPLOYEE SPECIFIC CHANGES - Only Managers (of that Project/Dept) and Admins can remove Employees
+&nbsp;    @DeleteMapping(&quot;/{id}&quot;)
+&nbsp;    @PreAuthorize(&quot;hasAnyAuthority(&#39;ADMIN&#39;, &#39;PROJECT_MANAGER&#39;, &#39;DEPT_MANAGER&#39;)&quot;)
+&nbsp;    public String deleteEmployee(@PathVariable(&quot;id&quot;) int id) {
+<b class="nc">&nbsp;        return employeeService.deleteEmployeeByID(id);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-02-01 16:48</div>
+</div>
+</body>
+</html>

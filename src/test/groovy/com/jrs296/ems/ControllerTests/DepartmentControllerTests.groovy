@@ -1,7 +1,8 @@
 package com.jrs296.ems.ControllerTests
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.jrs296.ems.controller.DepartmentController;
+import com.jrs296.ems.controller.DepartmentController
+import com.jrs296.ems.filters.JwtAuthFilter;
 import com.jrs296.ems.models.DTOs.InputDTOs.DepartmentInputDTO;
 import com.jrs296.ems.models.DTOs.OutputDTOs.DepartmentOutputDTO;
 import com.jrs296.ems.models.DTOs.OutputDTOs.ResponseObject;
@@ -12,7 +13,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -29,6 +31,7 @@ import static org.mockito.Mockito.when;
 @WebMvcTest(DepartmentController.class)
 @ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
 class DepartmentControllerTests {
 
     @Autowired
@@ -36,6 +39,9 @@ class DepartmentControllerTests {
 
     @MockBean
     private DepartmentService departmentService;
+
+    @MockBean
+    private JwtAuthFilter jwtAuthFilter
 
     @Test
     void getAllDepartments() throws Exception {

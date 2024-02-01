@@ -1,5 +1,6 @@
-package com.jrs296.ems;
+package com.jrs296.ems
 
+import com.jrs296.ems.ControllerTests.EmployeeControllerTests;
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;

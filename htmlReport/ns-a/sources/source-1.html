@@ -1,0 +1,351 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > AdminService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.jrs296.ems.service</a>
+</div>
+
+<h1>Coverage Summary for Class: AdminService (com.jrs296.ems.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AdminService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    11.6%
+  </span>
+  <span class="absValue">
+    (14/121)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.jrs296.ems.service;
+&nbsp;
+&nbsp;import com.jrs296.ems.models.DTOs.InputDTOs.AssignManagerDTO;
+&nbsp;import com.jrs296.ems.models.DTOs.InputDTOs.AssignUserDTO;
+&nbsp;import com.jrs296.ems.models.entity.Department;
+&nbsp;import com.jrs296.ems.models.entity.Employee;
+&nbsp;import com.jrs296.ems.models.entity.Project;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.security.core.Authentication;
+&nbsp;import org.springframework.security.core.GrantedAuthority;
+&nbsp;import org.springframework.security.core.context.SecurityContextHolder;
+&nbsp;import org.springframework.security.core.userdetails.UserDetails;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.Collection;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Objects;
+&nbsp;
+&nbsp;@Service
+&nbsp;public class AdminService {
+&nbsp;    @Autowired
+&nbsp;    private EmployeeService employeeService;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private DepartmentService departmentService;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private ProjectService projectService;
+&nbsp;
+&nbsp;    public String setManagerForDepartmentsAndProjects(AssignManagerDTO assignManagerDTO) {
+&nbsp;        //Input employee ID (check if 0 and if it exists), assign type (ENUM of either DEPT_MANAGER or PROJECT_MANAGER), DEPT_ID (or) PROJECT_ID - Check if exists, if someone is already manager, deregister them and add them to employee pool of dept
+&nbsp;
+&nbsp;        // Check if ADMIN or if DEPT_MANAGER, if ADMIN, can freely add to all. If DEPT_MANAGER, can only add PM&#39;s for their own Department
+<b class="fc">&nbsp;        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();</b>
+<b class="fc">&nbsp;        GrantedAuthority firstAuthority = authentication.getAuthorities().iterator().next();</b>
+<b class="nc">&nbsp;        String firstAuthorityName = firstAuthority.getAuthority();</b>
+<b class="nc">&nbsp;        UserDetails userDetails = (UserDetails) authentication.getPrincipal();</b>
+&nbsp;
+&nbsp;        //Strictly assuming that the Dept that the User belongs to is the DEPT in question
+<b class="nc">&nbsp;        Employee currentEmployee = employeeService.getEmployeeByUsername(userDetails.getUsername());</b>
+<b class="nc">&nbsp;        int deptId = -1;</b>
+<b class="nc">&nbsp;        if (currentEmployee.getEmployeeDepartment() != null) {</b>
+<b class="nc">&nbsp;            deptId = currentEmployee.getEmployeeDepartment().getDepartmentID();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (Objects.equals(firstAuthorityName, &quot;ADMIN&quot;)) {</b>
+&nbsp;            //Check if emp ID is valid
+<b class="nc">&nbsp;            Employee employee = employeeService.getEmployeeByID(assignManagerDTO.getEmployeeID());</b>
+<b class="nc">&nbsp;            if (employee == null) throw new RuntimeException(&quot;Employee Not Found&quot;);</b>
+<b class="nc">&nbsp;            if (employee.getEmployeeId() == 1) throw new RuntimeException(&quot;Cannot Assign ADMIN to role&quot;);</b>
+&nbsp;
+&nbsp;            //Check if Department or Project exists
+<b class="nc">&nbsp;            if (Objects.equals(assignManagerDTO.getAssignToRole(), &quot;DEPT_MANAGER&quot;)) {</b>
+<b class="nc">&nbsp;                Department department = departmentService.getDepartmentById(assignManagerDTO.getAssignToRoleID());</b>
+<b class="nc">&nbsp;                if (department == null) throw new RuntimeException(&quot;Department Not Found&quot;);</b>
+<b class="nc">&nbsp;            } else if (Objects.equals(assignManagerDTO.getAssignToRole(), &quot;PROJECT_MANAGER&quot;)) {</b>
+<b class="nc">&nbsp;                Project project = projectService.getProjectById(assignManagerDTO.getAssignToRoleID());</b>
+<b class="nc">&nbsp;                if (project == null) throw new RuntimeException(&quot;Project Not Found&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                throw new RuntimeException(&quot;Invalid Role to be assigned&quot;);</b>
+&nbsp;            }
+&nbsp;
+&nbsp;            //Check if any Employee has already been registered for these projects/departments
+<b class="nc">&nbsp;            if (Objects.equals(assignManagerDTO.getAssignToRole(), &quot;DEPT_MANAGER&quot;)) {</b>
+<b class="nc">&nbsp;                Department department = departmentService.getDepartmentById(assignManagerDTO.getAssignToRoleID());</b>
+<b class="nc">&nbsp;                if (department.getDepartmentManagerID() != -1) {</b>
+&nbsp;                    //Employee Changes
+<b class="nc">&nbsp;                    Employee deptManager = employeeService.getEmployeeByID(department.getDepartmentManagerID());</b>
+<b class="nc">&nbsp;                    deptManager.setRole(&quot;USER&quot;);</b>
+<b class="nc">&nbsp;                    employeeService.saveEmployee(deptManager);</b>
+&nbsp;
+<b class="nc">&nbsp;                    department.setDepartmentID(-1);</b>
+<b class="nc">&nbsp;                    departmentService.saveDepartment(department);</b>
+&nbsp;                }
+<b class="nc">&nbsp;            } else if (Objects.equals(assignManagerDTO.getAssignToRole(), &quot;PROJECT_MANAGER&quot;)) {</b>
+<b class="nc">&nbsp;                Project project = projectService.getProjectById(assignManagerDTO.getAssignToRoleID());</b>
+&nbsp;
+<b class="nc">&nbsp;                if (project.getProjectDepartment().getDepartmentManagerID() == -1)</b>
+<b class="nc">&nbsp;                    throw new RuntimeException(&quot;Department has no manager, Kindly assign a manager to given Department before proceeding.&quot;);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;                if (project.getProjectManagerID() != -1) {</b>
+&nbsp;                    //Employee Changes
+<b class="nc">&nbsp;                    Employee projectManager = employeeService.getEmployeeByID(project.getProjectManagerID());</b>
+<b class="nc">&nbsp;                    projectManager.setRole(&quot;USER&quot;);</b>
+<b class="nc">&nbsp;                    projectManager.setEmployeeProject(null);</b>
+&nbsp;
+&nbsp;                    //Project Changes
+<b class="nc">&nbsp;                    project.setProjectManagerID(-1);</b>
+<b class="nc">&nbsp;                    projectService.saveProject(project);</b>
+&nbsp;
+&nbsp;                    //Department Changes
+<b class="nc">&nbsp;                    Department projectManagerDepartment = projectManager.getEmployeeDepartment();</b>
+<b class="nc">&nbsp;                    projectManagerDepartment.setDepartmentManagerID(-1);</b>
+<b class="nc">&nbsp;                    departmentService.saveDepartment(projectManagerDepartment);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;
+&nbsp;            //Update Employee
+<b class="nc">&nbsp;            employee.setRole(assignManagerDTO.getAssignToRole());</b>
+<b class="nc">&nbsp;            if (Objects.equals(assignManagerDTO.getAssignToRole(), &quot;DEPT_MANAGER&quot;)) {</b>
+&nbsp;                //Department Changes
+<b class="nc">&nbsp;                Department newDepartment = departmentService.getDepartmentById(assignManagerDTO.getAssignToRoleID());</b>
+<b class="nc">&nbsp;                Department oldDepartment = employee.getEmployeeDepartment();</b>
+<b class="nc">&nbsp;                if (oldDepartment != null) {</b>
+<b class="nc">&nbsp;                    oldDepartment.setDepartmentManagerID(-1);</b>
+<b class="nc">&nbsp;                    departmentService.saveDepartment(oldDepartment);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                newDepartment.setDepartmentManagerID(employee.getEmployeeId());</b>
+<b class="nc">&nbsp;                departmentService.saveDepartment(newDepartment);</b>
+&nbsp;
+&nbsp;
+&nbsp;                //Employee Changes
+<b class="nc">&nbsp;                employee.setEmployeeProject(null);</b>
+<b class="nc">&nbsp;                employee.setRole(&quot;DEPT_MANAGER&quot;);</b>
+<b class="nc">&nbsp;                employee.setEmployeeDepartment(departmentService.getDepartmentById(assignManagerDTO.getAssignToRoleID()));</b>
+<b class="nc">&nbsp;                employeeService.saveEmployee(employee);</b>
+&nbsp;
+&nbsp;
+&nbsp;            } else {
+<b class="nc">&nbsp;                Department newDepartment = departmentService.getDepartmentById(projectService.getProjectById(assignManagerDTO.getAssignToRoleID()).getProjectDepartment().getDepartmentID());</b>
+<b class="nc">&nbsp;                Department oldDepartment = employee.getEmployeeDepartment();</b>
+<b class="nc">&nbsp;                if (oldDepartment != null &amp;&amp; oldDepartment.getDepartmentManagerID() == employee.getEmployeeId()) {</b>
+<b class="nc">&nbsp;                    oldDepartment.setDepartmentManagerID(-1);</b>
+<b class="nc">&nbsp;                    departmentService.saveDepartment(oldDepartment);</b>
+&nbsp;                }
+&nbsp;
+&nbsp;                //Employee Changes
+<b class="nc">&nbsp;                employee.setEmployeeProject(projectService.getProjectById(assignManagerDTO.getAssignToRoleID()));</b>
+<b class="nc">&nbsp;                employee.setRole(&quot;PROJECT_MANAGER&quot;);</b>
+<b class="nc">&nbsp;                employee.setEmployeeDepartment(newDepartment);</b>
+<b class="nc">&nbsp;                employeeService.saveEmployee(employee);</b>
+&nbsp;
+&nbsp;                //Project Changes
+<b class="nc">&nbsp;                Project project = projectService.getProjectById(assignManagerDTO.getAssignToRoleID());</b>
+<b class="nc">&nbsp;                project.setProjectManagerID(employee.getEmployeeId());</b>
+<b class="nc">&nbsp;                projectService.saveProject(project);</b>
+&nbsp;            }
+&nbsp;
+&nbsp;        } else {
+&nbsp;            //DEPT MANAGER - get dept of which dept_manager is manager, then scope projects
+<b class="nc">&nbsp;            List&lt;Project&gt; listOfProjectsInDept = departmentService.getDepartmentById(deptId).getDepartmentProjects();</b>
+<b class="nc">&nbsp;            List&lt;Integer&gt; listOfProjectsIDsInDept = listOfProjectsInDept.stream().map(Project::getProjectID).toList();</b>
+&nbsp;
+&nbsp;            //Check if emp ID is valid
+<b class="nc">&nbsp;            Employee employee = employeeService.getEmployeeByID(assignManagerDTO.getEmployeeID());</b>
+<b class="nc">&nbsp;            if (employee == null) throw new RuntimeException(&quot;Employee Not Found&quot;);</b>
+<b class="nc">&nbsp;            if (employee.getEmployeeId() == 1) throw new RuntimeException(&quot;Cannot Assign ADMIN to role&quot;);</b>
+&nbsp;
+&nbsp;            //Check if Trying to Assign a DEPT_MANAGER - NO
+<b class="nc">&nbsp;            if (Objects.equals(assignManagerDTO.getAssignToRole(), &quot;DEPT_MANAGER&quot;)) {</b>
+<b class="nc">&nbsp;                throw new RuntimeException(&quot;Department Manager Cannot assign another Department Manager&quot;);</b>
+<b class="nc">&nbsp;            } else if (Objects.equals(assignManagerDTO.getAssignToRole(), &quot;PROJECT_MANAGER&quot;)) {</b>
+<b class="nc">&nbsp;                Project project = projectService.getProjectById(assignManagerDTO.getAssignToRoleID());</b>
+<b class="nc">&nbsp;                if (project == null) throw new RuntimeException(&quot;Project Not Found&quot;);</b>
+<b class="nc">&nbsp;                if (!listOfProjectsInDept.contains(project))</b>
+<b class="nc">&nbsp;                    throw new RuntimeException(&quot;Cannot assign to a Project that is not in scope of current Department&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                throw new RuntimeException(&quot;Invalid Role to be assigned&quot;);</b>
+&nbsp;            }
+&nbsp;
+&nbsp;            //Check if any Employee has already been registered for these projects/departments
+<b class="nc">&nbsp;            Project project = projectService.getProjectById(assignManagerDTO.getAssignToRoleID());</b>
+<b class="nc">&nbsp;            if (project.getProjectManagerID() != -1) {</b>
+&nbsp;                //Employee Changes
+<b class="nc">&nbsp;                Employee projectManager = employeeService.getEmployeeByID(project.getProjectManagerID());</b>
+<b class="nc">&nbsp;                projectManager.setRole(&quot;USER&quot;);</b>
+<b class="nc">&nbsp;                projectManager.setEmployeeProject(null);</b>
+&nbsp;
+&nbsp;                //Project Changes
+<b class="nc">&nbsp;                project.setProjectManagerID(-1);</b>
+<b class="nc">&nbsp;                projectService.saveProject(project);</b>
+&nbsp;
+&nbsp;                //Department Changes
+<b class="nc">&nbsp;                Department projectManagerDepartment = projectManager.getEmployeeDepartment();</b>
+<b class="nc">&nbsp;                departmentService.saveDepartment(projectManagerDepartment);</b>
+&nbsp;            }
+&nbsp;
+&nbsp;            //Employee Changes
+<b class="nc">&nbsp;            employee.setEmployeeProject(projectService.getProjectById(assignManagerDTO.getAssignToRoleID()));</b>
+<b class="nc">&nbsp;            employee.setRole(&quot;PROJECT_MANAGER&quot;);</b>
+<b class="nc">&nbsp;            employee.setEmployeeDepartment(departmentService.getDepartmentById(projectService.getProjectById(assignManagerDTO.getAssignToRoleID()).getProjectDepartment().getDepartmentID()));</b>
+<b class="nc">&nbsp;            employeeService.saveEmployee(employee);</b>
+&nbsp;
+&nbsp;            //Project Changes
+<b class="nc">&nbsp;            project.setProjectManagerID(employee.getEmployeeId());</b>
+<b class="nc">&nbsp;            projectService.saveProject(project);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return &quot;ROLE CHANGE SUCCESSFUL&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String setEmployeeToDepartmentOrProject(AssignUserDTO assignUserDTO) {
+&nbsp;
+&nbsp;        //If Admin - add freely
+&nbsp;        //If Dept Manager - Can only add to own dept and projects
+&nbsp;        //If Project Manager - Can only add to own projects
+&nbsp;
+&nbsp;        //Check if Employee is Valid
+<b class="fc">&nbsp;        Employee employee = employeeService.getEmployeeByID(assignUserDTO.getEmployeeID());</b>
+<b class="fc">&nbsp;        if (employee == null) throw new RuntimeException(&quot;Employee Not Found&quot;);</b>
+<b class="fc">&nbsp;        if (employee.getEmployeeId() == 1) throw new RuntimeException(&quot;Cannot Assign ADMIN to a USER based role.&quot;);</b>
+&nbsp;
+&nbsp;        //Check if Department
+<b class="fc">&nbsp;        Department newDepartment = departmentService.getDepartmentById(assignUserDTO.getAssignToDepartmentID());</b>
+<b class="fc">&nbsp;        if (newDepartment == null) throw new RuntimeException(&quot;Department Not Found&quot;);</b>
+&nbsp;
+&nbsp;        //Check if Dept, then Project has Managers, if not throw error
+<b class="fc">&nbsp;        if (newDepartment.getDepartmentID() == -1)</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;Department has no manager, Kindly assign a manager to given Department before proceeding.&quot;);</b>
+&nbsp;
+&nbsp;        //Add Employee to new station
+&nbsp;        // If project is -1, assume that project is yet to be assigned - add employee to new department&#39;s unassigned array
+&nbsp;        // Else Add Employee to new station (set project and department to new) - update that project&#39;s employee list (add)
+<b class="fc">&nbsp;        employee.setEmployeeDepartment(newDepartment);</b>
+&nbsp;
+&nbsp;        //Check if Project (if specified) exists within Dept
+&nbsp;
+<b class="fc">&nbsp;        if(assignUserDTO.getAssignToProjectID()!=-1) {</b>
+<b class="fc">&nbsp;            Project newProject = projectService.getProjectById(assignUserDTO.getAssignToProjectID());</b>
+<b class="fc">&nbsp;            if (newProject == null) throw new RuntimeException(&quot;Project Not Found&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;            if (!newDepartment.getDepartmentProjects().contains(newProject))</b>
+<b class="fc">&nbsp;                throw new RuntimeException(&quot;Project specified is not a part of given Department&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            if (newProject.getProjectManagerID() == -1)</b>
+<b class="nc">&nbsp;                throw new RuntimeException(&quot;Project has no manager, Kindly assign a manager to given Project before proceeding.&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            employee.setEmployeeProject(newProject);</b>
+<b class="nc">&nbsp;            newProject.getProjectEmployees().add(employee);</b>
+<b class="nc">&nbsp;            projectService.saveProject(newProject);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            employee.setEmployeeDepartment(newDepartment);</b>
+<b class="nc">&nbsp;            employee.setEmployeeProject(null);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        employeeService.saveEmployee(employee);</b>
+<b class="nc">&nbsp;        departmentService.saveDepartment(newDepartment);</b>
+&nbsp;
+&nbsp;        //Remove Employee from current station (set project and department null) - update that project&#39;s employee (remove)
+<b class="nc">&nbsp;        Project currentProject = employee.getEmployeeProject();</b>
+<b class="nc">&nbsp;        if(currentProject!=null) {</b>
+<b class="nc">&nbsp;            currentProject.getProjectEmployees().remove(employee);</b>
+<b class="nc">&nbsp;            projectService.saveProject(currentProject);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return &quot;EMPLOYEE ASSIGNMENT SUCCESSFUL&quot;;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-02-01 16:48</div>
+</div>
+</body>
+</html>

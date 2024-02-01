@@ -1,27 +1,25 @@
 package com.jrs296.ems.ControllerTests
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.jrs296.ems.controller.EmployeeController;
+import com.jrs296.ems.controller.EmployeeController
+import com.jrs296.ems.filters.JwtAuthFilter;
 import com.jrs296.ems.models.DTOs.InputDTOs.EmployeeRegisterInputDTO;
-import com.jrs296.ems.models.DTOs.OutputDTOs.EmployeeOutputDTO
-import com.jrs296.ems.models.entity.Employee;
-import com.jrs296.ems.service.EmployeeService;
+import com.jrs296.ems.models.entity.Employee
+import com.jrs296.ems.service.DepartmentService;
+import com.jrs296.ems.service.EmployeeService
+import com.jrs296.ems.service.ProjectService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
+import org.springframework.http.MediaType
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.util.Collections;
-import java.util.List;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
@@ -29,6 +27,7 @@ import static org.mockito.Mockito.when;
 @WebMvcTest(EmployeeController.class)
 @ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
 class EmployeeControllerTests {
 
     @Autowired
@@ -36,6 +35,15 @@ class EmployeeControllerTests {
 
     @MockBean
     private EmployeeService employeeService;
+
+    @MockBean
+    private DepartmentService departmentService
+
+    @MockBean
+    private ProjectService projectService
+
+    @MockBean
+    private JwtAuthFilter jwtAuthFilter
 
     @Test
     void getAllEmployees() throws Exception {

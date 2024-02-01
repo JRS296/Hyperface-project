@@ -1,18 +1,21 @@
 package com.jrs296.ems.ControllerTests
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.jrs296.ems.controller.ProjectController;
+import com.jrs296.ems.controller.ProjectController
+import com.jrs296.ems.filters.JwtAuthFilter;
 import com.jrs296.ems.models.DTOs.InputDTOs.ProjectInputDTO;
 import com.jrs296.ems.models.DTOs.OutputDTOs.ProjectOutputDTO;
 import com.jrs296.ems.models.DTOs.OutputDTOs.ResponseObject
-import com.jrs296.ems.models.entity.Project;
+import com.jrs296.ems.models.entity.Project
+import com.jrs296.ems.service.DepartmentService;
 import com.jrs296.ems.service.ProjectService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -30,6 +33,7 @@ import static org.mockito.Mockito.when;
 @WebMvcTest(ProjectController.class)
 @ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
 class ProjectControllerTests {
 
     @Autowired
@@ -37,6 +41,12 @@ class ProjectControllerTests {
 
     @MockBean
     private ProjectService projectService;
+
+    @MockBean
+    private DepartmentService departmentService
+
+    @MockBean
+    private JwtAuthFilter jwtAuthFilter
 
     @Test
     void getAllProjects() throws Exception {
