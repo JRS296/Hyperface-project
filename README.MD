@@ -154,3 +154,28 @@ TODO - TestCases for PUT and DELETE**
 
 **TODO - User Specific data change (PUT) \
 TODO - Scoped Handling (DEPT_MANAGER and PROJECT_MANAGER)**
+
+## Testing Coverage
+### Controller Tests
+- [ ] - AdminControllerTests
+- [x] - AuthControllerTests
+- [ ] - DepartmentControllerTests
+- [ ] - EmployeeControllerTests
+- [ ] - ProjectControllerTests
+
+### Service Tests
+- [ ] - AdminServiceTests
+- [ ] - JWTServiceTests
+- [ ] - DepartmentServiceTests
+- [ ] - EmployeeServiceTests
+- [ ] - ProjectServiceTests
+
+### End-To-End Tests
+- [ ] - AuthSystemTests
+- [ ] - AdminSystemTests
+- [ ] - DepartmentSystemTests
+- [ ] - EmployeeSystemTests
+- [ ] - ProjectSystemTests
+
+### Scenario Tests
+- [ ] - Scenario Case 1
