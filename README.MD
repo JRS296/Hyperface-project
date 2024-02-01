@@ -3,10 +3,10 @@
 Java/Apache Groovy Spring Boot Project - Hyperface Internship, January 2024.
 
 ## Progress:
-- Week 1 - CRUD Operations for EMS System - 95% (PR #1)
-- Week 2 - Testing - 0% (PR #3)
-- Week 3 - Authentication and Authorization - 100% (PR #1)
-- Week 4 - Transition to Groovy - 100% (PR #2)
+- Week 1 - CRUD Operations for EMS System - 95% (PR [#1](https://github.com/JRS296/Hyperface-project/pull/1))
+- Week 2 - Testing - 0% (PR [#3](https://github.com/JRS296/Hyperface-project/pull/3))
+- Week 3 - Authentication and Authorization - 100% (PR [#1](https://github.com/JRS296/Hyperface-project/pull/1))
+- Week 4 - Transition to Groovy - 100% (PR [#2](https://github.com/JRS296/Hyperface-project/pull/2))
 
 ## Project Setup
 
