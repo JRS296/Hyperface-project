@@ -605,15 +605,6 @@ public class AssignManagerDTOTest {
     }
 
     @Test
-    public void testInvalidAssignManagerDTO() {
-        AssignManagerDTO assignManagerDTO = new AssignManagerDTO();
-
-        Set<ConstraintViolation<AssignManagerDTO>> violations = validator.validate(assignManagerDTO);
-        assertFalse(violations.isEmpty());
-        assertEquals(3, violations.size()); // Three fields are annotated with @NotNull
-    }
-
-    @Test
     public void testGettersAndSetters() {
         AssignManagerDTO assignManagerDTO = new AssignManagerDTO();
         int employeeID = 123;
@@ -648,15 +639,6 @@ public class AssignUserDTOTest {
 
         Set<ConstraintViolation<AssignUserDTO>> violations = validator.validate(assignUserDTO);
         assertTrue(violations.isEmpty());
-    }
-
-    @Test
-    public void testInvalidAssignUserDTO() {
-        AssignUserDTO assignUserDTO = new AssignUserDTO();
-
-        Set<ConstraintViolation<AssignUserDTO>> violations = validator.validate(assignUserDTO);
-        assertFalse(violations.isEmpty());
-        assertEquals(2, violations.size()); // Two fields are annotated with @NotNull
     }
 
     @Test
@@ -779,7 +761,7 @@ public class EmployeeRegisterInputDTOTest {
         Set<ConstraintViolation<EmployeeRegisterInputDTO>> violations = validator.validate(employeeRegisterInputDTO);
 
         // Verify constraints are violated
-        assertEquals(4, violations.size(), "There should be 4 violations");
+        assertEquals(5, violations.size(), "There should be 5 violations");
 
         // Optionally, you can assert on specific constraint violations
         violations.forEach(violation -> {

@@ -42,7 +42,7 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
-	testImplementation  'com.h2database:h2:1.3.148'
+	testImplementation  'com.h2database:h2'
 }
 tasks.named('test') {
 	useJUnitPlatform()

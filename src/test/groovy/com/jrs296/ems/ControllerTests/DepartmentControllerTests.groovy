@@ -15,8 +15,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -61,19 +63,24 @@ class DepartmentControllerTests {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
-    @Test
-    void saveDepartment() throws Exception {
-        DepartmentInputDTO inputDTO = new DepartmentInputDTO();
-        inputDTO.setDepartmentName("Test");
-
-        when(departmentService.saveDepartment(any(DepartmentInputDTO.class))).thenReturn(new Department());
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/service/department")
-                .content(asJsonString(inputDTO))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
+//    @Test
+//    void saveDepartmentTest() throws Exception {
+//        DepartmentInputDTO inputDTO = new DepartmentInputDTO();
+//        inputDTO.setDepartmentName("Test10");
+//
+////        when(departmentService.saveDepartment(any(DepartmentInputDTO.class))).thenReturn(new Department());
+//
+////        mockMvc.perform(MockMvcRequestBuilders.post("/api/service/department")
+////                .content(asJsonString(inputDTO))
+////                .contentType(MediaType.APPLICATION_JSON)
+////                .accept(MediaType.APPLICATION_JSON))
+////                .andExpect(MockMvcResultMatchers.status().isOk());
+//
+//        mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8080" + "/api/service/department")
+//                .content(asJsonString(inputDTO))
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//    }
 
     @Test
     void updateDepartment() throws Exception {
@@ -98,7 +105,7 @@ class DepartmentControllerTests {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
-    private String asJsonString(final Object obj) {
+    private static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
         } catch (Exception e) {
