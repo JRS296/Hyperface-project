@@ -7,7 +7,7 @@ Java/Apache Groovy Spring Boot Project - Hyperface Internship, January 2024.
 - Week 2 - Testing - 55% Code Coverage (75/101 TC PASSED) (PR [#3](https://github.com/JRS296/Hyperface-project/pull/3))
 - Week 3 - Authentication and Authorization - 100% (PR [#1](https://github.com/JRS296/Hyperface-project/pull/1))
 - Week 4 - Transition to Groovy - 100% (PR [#2](https://github.com/JRS296/Hyperface-project/pull/2))
-- Miscellaneous - (PR [#4](https://github.com/JRS296/Hyperface-project/pull/4))
+- Bug Squashing + Features Cleanup - (PR [#4](https://github.com/JRS296/Hyperface-project/pull/4))
 
 ## Project Setup
 
@@ -43,59 +43,6 @@ testImplementation  'com.h2database:h2:1.3.148'
 
 //Optional Dependencies
 developmentOnly 'org.springframework.boot:spring-boot-devtools'
-```
-
-Use following Gradle File for Gradle Build
-```gradle
-plugins {
-	id 'groovy'
-	id 'org.springframework.boot' version '3.2.1'
-	id 'io.spring.dependency-management' version '1.1.4'
-}
-
-group = 'com.jrs296'
-version = '0.0.1-SNAPSHOT'
-
-sourceSets {
-	main {
-		java { srcDirs = [] }    // no source dirs for the java compiler
-		groovy { srcDirs = ["src/main/java", "src/main/groovy"] }  // compile   everything in src/ with groovy
-	}
-	test{
-		groovy { srcDirs = ["src/test/groovy"] }
-	}
-}
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
-repositories {
-	mavenCentral()
-}
-dependencies {
-	implementation 'org.apache.groovy:groovy:4.0.17'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.jeasy:easy-random:5.0.0'
-	implementation 'org.springframework.boot:spring-boot-starter-security:3.2.2'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.0'
-	implementation 'io.jsonwebtoken:jjwt:0.9.1'
-	implementation 'javax.xml.bind:jaxb-api:2.2.4'
-	implementation 'org.springframework.boot:spring-boot-starter-cache:3.2.0'
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
-	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
-	testImplementation  'com.h2database:h2:1.3.148'
-}
-tasks.named('test') {
-	useJUnitPlatform()
-}
 ```
 
 Build Application
