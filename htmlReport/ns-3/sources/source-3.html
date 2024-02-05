@@ -1,0 +1,253 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > SecurityConfig</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.jrs296.ems.config.security</a>
+</div>
+
+<h1>Coverage Summary for Class: SecurityConfig (com.jrs296.ems.config.security)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SecurityConfig</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (13/13)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SecurityConfig$$SpringCGLIB$$0</td>
+  </tr>
+  <tr>
+    <td class="name">SecurityConfig$$SpringCGLIB$$FastClass$$0</td>
+  </tr>
+  <tr>
+    <td class="name">SecurityConfig$$SpringCGLIB$$FastClass$$1</td>
+  </tr>
+  <tr>
+    <td class="name">SecurityConfig$_securityFilterChain_closure1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SecurityConfig$_securityFilterChain_closure2</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SecurityConfig$_securityFilterChain_closure3</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (16/16)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.jrs296.ems.config.security;
+&nbsp;
+&nbsp;import com.jrs296.ems.config.security.AuthEntry;
+&nbsp;import com.jrs296.ems.config.security.ForbiddenHandler;
+&nbsp;import com.jrs296.ems.filters.JwtAuthFilter;
+&nbsp;import com.jrs296.ems.service.EmployeeInfoService;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.context.annotation.Bean;
+&nbsp;import org.springframework.context.annotation.Configuration;
+&nbsp;import org.springframework.security.authentication.AuthenticationManager;
+&nbsp;import org.springframework.security.authentication.AuthenticationProvider;
+&nbsp;import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+&nbsp;import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+&nbsp;import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+&nbsp;import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+&nbsp;import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+&nbsp;import org.springframework.security.config.http.SessionCreationPolicy;
+&nbsp;import org.springframework.security.core.userdetails.UserDetailsService;
+&nbsp;import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+&nbsp;import org.springframework.security.crypto.password.PasswordEncoder;
+&nbsp;import org.springframework.security.web.SecurityFilterChain;
+&nbsp;import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+&nbsp;import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+&nbsp;
+&nbsp;
+&nbsp;@Configuration
+&nbsp;@EnableWebSecurity
+&nbsp;@EnableMethodSecurity
+&nbsp;public class SecurityConfig {
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    AuthEntry authEntry;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    ForbiddenHandler forbiddenHandler;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private JwtAuthFilter authFilter;
+&nbsp;
+&nbsp;    @Bean
+&nbsp;    UserDetailsService userDetailsService() {
+<b class="fc">&nbsp;        return new EmployeeInfoService();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Bean
+&nbsp;    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+<b class="fc">&nbsp;        http.csrf(AbstractHttpConfigurer::disable)</b>
+<b class="fc">&nbsp;                .authorizeHttpRequests((authorize) -&gt;</b>
+<b class="fc">&nbsp;                        authorize.requestMatchers(&quot;/api/auth/test&quot;, &quot;/api/auth/register&quot;, &quot;/api/auth/login&quot;, &quot;/api/test&quot;).permitAll().anyRequest().authenticated())</b>
+<b class="fc">&nbsp;                .exceptionHandling { it.authenticationEntryPoint authEntry accessDeniedHandler forbiddenHandler }</b>
+<b class="fc">&nbsp;                .authenticationProvider(authenticationProvider())</b>
+<b class="fc">&nbsp;                .sessionManagement { it.sessionCreationPolicy SessionCreationPolicy.NEVER }</b>
+&nbsp;                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+&nbsp;
+<b class="fc">&nbsp;        return http.build();;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Bean
+&nbsp;    PasswordEncoder passwordEncoder() {
+<b class="fc">&nbsp;        return new BCryptPasswordEncoder();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Bean
+&nbsp;    AuthenticationProvider authenticationProvider() {
+<b class="fc">&nbsp;        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();</b>
+<b class="fc">&nbsp;        authenticationProvider.setUserDetailsService(userDetailsService());</b>
+<b class="fc">&nbsp;        authenticationProvider.setPasswordEncoder(passwordEncoder());</b>
+<b class="fc">&nbsp;        return authenticationProvider;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Bean
+&nbsp;    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+<b class="fc">&nbsp;        return config.getAuthenticationManager();</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-02-01 16:48</div>
+</div>
+</body>
+</html>

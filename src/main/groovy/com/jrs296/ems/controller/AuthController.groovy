@@ -45,7 +45,7 @@ public class AuthController {
         if (authentication.isAuthenticated()) {
             return jwtService.generateToken(employeeLoginInputDTO.getUsername());
         } else {
-            throw new UsernameNotFoundException("invalid user request !");
+            throw new UsernameNotFoundException("Invalid User Request!");
         }
     }
 

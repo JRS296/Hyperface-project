@@ -4,10 +4,10 @@ Java/Apache Groovy Spring Boot Project - Hyperface Internship, January 2024.
 
 ## Progress:
 - Week 1 - CRUD Operations for EMS System - 95% (PR [#1](https://github.com/JRS296/Hyperface-project/pull/1))
-- Week 2 - Testing - 10% Code Coverage (PR [#3](https://github.com/JRS296/Hyperface-project/pull/3))
+- Week 2 - Testing - 55% Code Coverage (75/101 TC PASSED) (PR [#3](https://github.com/JRS296/Hyperface-project/pull/3))
 - Week 3 - Authentication and Authorization - 100% (PR [#1](https://github.com/JRS296/Hyperface-project/pull/1))
 - Week 4 - Transition to Groovy - 100% (PR [#2](https://github.com/JRS296/Hyperface-project/pull/2))
-
+- 
 ## Project Setup
 
 ### Project Requirements
@@ -157,9 +157,9 @@ TODO - Scoped Handling (DEPT_MANAGER and PROJECT_MANAGER)**
 
 ## Testing Coverage
 ### Controller Tests
-- [ ] - AdminControllerTests
+- [x] - AdminControllerTests
 - [x] - AuthControllerTests
-- [ ] - DepartmentControllerTests
+- [x] - DepartmentControllerTests
 - [ ] - EmployeeControllerTests
 - [ ] - ProjectControllerTests
 
@@ -171,11 +171,14 @@ TODO - Scoped Handling (DEPT_MANAGER and PROJECT_MANAGER)**
 - [ ] - ProjectServiceTests
 
 ### End-To-End Tests
-- [ ] - AuthSystemTests
-- [ ] - AdminSystemTests
+- [x] - AuthSystemTests
+- [ ] - TODO - AdminSystemTests
 - [ ] - DepartmentSystemTests
 - [ ] - EmployeeSystemTests
 - [ ] - ProjectSystemTests
 
-### Scenario Tests
-- [ ] - Scenario Case 1
+### Miscellaneous Tests
+- [x] - Exception Tests
+- [ ] - Miscellaneous Tests
+
+TODO - Scoped Handling (DEPT_MANAGER and PROJECT_MANAGER)**
